@@ -27,27 +27,27 @@ export default function NewSpacePage() {
     <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
       <header className="flex items-center gap-3 px-4 pt-12 pb-4">
         <button onClick={() => router.back()}
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <ChevronLeft size={22} className="text-gray-700" />
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+          <ChevronLeft size={22} className="text-[var(--text-primary)]" />
         </button>
-        <h1 className="text-lg font-bold text-gray-900">Nuevo Espacio</h1>
+        <h1 className="text-lg font-bold text-[var(--text-primary)]">Nuevo Espacio</h1>
       </header>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 px-4">
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
-          <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-500 block mb-2">
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
+          <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)] block mb-2">
             Nombre del Espacio
           </label>
           <input name="name" type="text" required placeholder="Ej. Mi Casa, Oficina"
-            className="w-full text-[15px] text-gray-900 placeholder-gray-400 bg-transparent border-none outline-none" />
+            className="w-full text-[15px] text-[var(--text-primary)] placeholder-[var(--text-disabled)] bg-transparent border-none outline-none" />
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
-          <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-500 block mb-2">
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
+          <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)] block mb-2">
             Descripción (opcional)
           </label>
           <textarea name="description" rows={3} placeholder="¿Para qué es este espacio?"
-            className="w-full text-[15px] text-gray-900 placeholder-gray-400 bg-transparent border-none outline-none resize-none" />
+            className="w-full text-[15px] text-[var(--text-primary)] placeholder-[var(--text-disabled)] bg-transparent border-none outline-none resize-none" />
         </div>
 
         {error && (

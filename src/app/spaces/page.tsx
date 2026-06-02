@@ -17,11 +17,11 @@ export default async function SpacesPage() {
 
       {/* Header */}
       <header className="px-4 pt-12 pb-4">
-        <h1 className="text-lg font-bold text-gray-900">Espacios</h1>
+        <h1 className="text-lg font-bold text-[var(--text-primary)]">Espacios</h1>
       </header>
 
       <div className="px-4">
-        <p className="text-sm text-gray-500 mb-5">
+        <p className="text-sm text-[var(--text-secondary)] mb-5">
           Gestiona gastos comunes con roomies, colegas o familia.
         </p>
 
@@ -38,7 +38,7 @@ export default async function SpacesPage() {
 
         {/* Spaces list */}
         {spaces.length === 0 ? (
-          <div className="text-center py-16 text-gray-400">
+          <div className="text-center py-16 text-[var(--text-secondary)]">
             <p className="text-sm">Aún no tienes espacios compartidos.</p>
           </div>
         ) : (
@@ -53,11 +53,11 @@ export default async function SpacesPage() {
         <Link
           href="/spaces/new"
           className="flex flex-col items-center justify-center gap-2 mt-4
-                     border-2 border-dashed border-gray-200 rounded-2xl p-8
-                     text-gray-400 hover:border-blue-300 hover:text-blue-500
+                     border-2 border-dashed border-[var(--border)] rounded-2xl p-8
+                     text-[var(--text-secondary)] hover:border-blue-300 hover:text-blue-500
                      transition-colors duration-150 tap-none"
         >
-          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-full bg-[var(--input-bg)] flex items-center justify-center">
             <Plus size={20} />
           </div>
           <p className="text-sm font-medium">Nuevo Espacio</p>
@@ -75,22 +75,22 @@ function SpaceCard({ space }: { space: any }) {
   const paidPct = 60 // TODO: compute from real entries
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-4">
+    <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
       {/* Space header */}
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h3 className="font-bold text-gray-900 text-[16px]">{space.name}</h3>
-          {space.description && <p className="text-xs text-gray-400 mt-0.5">{space.description}</p>}
+          <h3 className="font-bold text-[var(--text-primary)] text-[16px]">{space.name}</h3>
+          {space.description && <p className="text-xs text-[var(--text-secondary)] mt-0.5">{space.description}</p>}
         </div>
       </div>
 
       {/* Pending amount */}
       <div className="mb-3">
         <div className="flex items-center justify-between mb-1">
-          <span className="text-xs text-gray-500">Facturas pendientes</span>
+          <span className="text-xs text-[var(--text-secondary)]">Facturas pendientes</span>
           <span className="font-bold text-blue-600">${totalPending.toFixed(2)}</span>
         </div>
-        <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+        <div className="h-1.5 bg-[var(--input-bg)] rounded-full overflow-hidden">
           <div
             className="h-full bg-green-500 rounded-full"
             style={{ width: `${paidPct}%` }}
@@ -100,8 +100,8 @@ function SpaceCard({ space }: { space: any }) {
 
       {/* Actions */}
       <Link href={`/spaces/${space.id}`}
-        className="w-full h-11 bg-gray-100 hover:bg-gray-200 rounded-xl
-                   text-sm font-semibold text-gray-700
+        className="w-full h-11 bg-[var(--input-bg)] hover:bg-[var(--divider)] rounded-xl
+                   text-sm font-semibold text-[var(--text-primary)]
                    flex items-center justify-center transition-colors tap-none">
         Ver Detalles
       </Link>

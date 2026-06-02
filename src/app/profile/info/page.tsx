@@ -44,24 +44,24 @@ export default function PersonalInfoPage() {
     <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
       <header className="flex items-center gap-3 px-4 pt-12 pb-4">
         <button onClick={() => router.back()}
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <ChevronLeft size={22} className="text-gray-700" />
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+          <ChevronLeft size={22} className="text-[var(--text-primary)]" />
         </button>
-        <h1 className="text-lg font-bold text-gray-900">Información Personal</h1>
+        <h1 className="text-lg font-bold text-[var(--text-primary)]">Información Personal</h1>
       </header>
 
       <div className="px-4 flex flex-col gap-4">
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 flex flex-col gap-4">
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4 flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
-            <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">Nombre completo</label>
+            <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)]">Nombre completo</label>
             <input value={fullName} onChange={e => setFullName(e.target.value)}
-              className="w-full h-12 px-0 text-[15px] text-gray-900 bg-transparent border-none outline-none border-b border-gray-100 focus:border-blue-500" />
+              className="w-full h-12 px-0 text-[15px] text-[var(--text-primary)] bg-transparent border-none outline-none border-b border-[var(--border)] focus:border-blue-500" />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">Correo electrónico</label>
+            <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)]">Correo electrónico</label>
             <input value={email} disabled
-              className="w-full h-12 px-0 text-[15px] text-gray-400 bg-transparent border-none outline-none cursor-not-allowed" />
-            <p className="text-xs text-gray-400">El correo no se puede cambiar desde aquí.</p>
+              className="w-full h-12 px-0 text-[15px] text-[var(--text-secondary)] bg-transparent border-none outline-none cursor-not-allowed" />
+            <p className="text-xs text-[var(--text-secondary)]">El correo no se puede cambiar desde aquí.</p>
           </div>
         </div>
 

@@ -33,30 +33,30 @@ export default function SecurityPage() {
     <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
       <header className="flex items-center gap-3 px-4 pt-12 pb-4">
         <button onClick={() => router.back()}
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <ChevronLeft size={22} className="text-gray-700" />
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+          <ChevronLeft size={22} className="text-[var(--text-primary)]" />
         </button>
-        <h1 className="text-lg font-bold text-gray-900">Seguridad</h1>
+        <h1 className="text-lg font-bold text-[var(--text-primary)]">Seguridad</h1>
       </header>
 
       <div className="px-4 flex flex-col gap-4">
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 flex flex-col gap-4">
-          <p className="text-sm font-semibold text-gray-700">Cambiar contraseña</p>
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4 flex flex-col gap-4">
+          <p className="text-sm font-semibold text-[var(--text-primary)]">Cambiar contraseña</p>
 
           {['Nueva contraseña', 'Confirmar contraseña'].map((label, i) => (
             <div key={i} className="flex flex-col gap-1.5">
-              <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">{label}</label>
+              <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)]">{label}</label>
               <div className="relative">
                 <input
                   type={show ? 'text' : 'password'}
                   value={i === 0 ? password : confirm}
                   onChange={e => i === 0 ? setPassword(e.target.value) : setConfirm(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full h-12 px-0 pr-8 text-[15px] text-gray-900 bg-transparent border-none outline-none border-b border-gray-100 focus:border-blue-500"
+                  className="w-full h-12 px-0 pr-8 text-[15px] text-[var(--text-primary)] bg-transparent border-none outline-none border-b border-[var(--border)] focus:border-blue-500"
                 />
                 {i === 0 && (
                   <button type="button" onClick={() => setShow(v => !v)}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 tap-none">
+                    className="absolute right-0 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] tap-none">
                     {show ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 )}

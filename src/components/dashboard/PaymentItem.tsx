@@ -21,8 +21,8 @@ export function PaymentItem({ entry, onTogglePaid }: PaymentItemProps) {
 
   return (
     <div className={cn(
-      'flex items-center gap-3 bg-white rounded-2xl border p-4',
-      isPaid ? 'border-gray-100 opacity-75' : 'border-gray-100',
+      'flex items-center gap-3 bg-[var(--card)] rounded-2xl border p-4',
+      isPaid ? 'border-[var(--border)] opacity-75' : 'border-[var(--border)]',
       days_until_due < 0 && !isPaid ? 'border-l-4 border-l-red-400' : '',
       days_until_due === 0 && !isPaid ? 'border-l-4 border-l-amber-400' : ''
     )}>
@@ -34,7 +34,7 @@ export function PaymentItem({ entry, onTogglePaid }: PaymentItemProps) {
       <Link href={`/payments/${entry.id}`} className="flex-1 min-w-0 tap-none">
         <p className={cn(
           'text-[15px] font-semibold leading-tight truncate',
-          isPaid ? 'line-through text-gray-400' : 'text-gray-900'
+          isPaid ? 'line-through text-[var(--text-secondary)]' : 'text-[var(--text-primary)]'
         )}>
           {payment.name}
         </p>
@@ -47,17 +47,17 @@ export function PaymentItem({ entry, onTogglePaid }: PaymentItemProps) {
       </Link>
 
       {/* Amount */}
-      <span className={cn('text-base font-bold tabular-nums', isPaid ? 'text-gray-400' : 'text-gray-900')}>
+      <span className={cn('text-base font-bold tabular-nums', isPaid ? 'text-[var(--text-secondary)]' : 'text-[var(--text-primary)]')}>
         {formatByCurrency(payment.amount, payment.currency ?? 'COP')}
       </span>
 
       {/* Edit icon */}
       <Link
         href={`/payments/${entry.id}/edit`}
-        className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none flex-shrink-0"
+        className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none flex-shrink-0"
         aria-label={`Editar ${payment.name}`}
       >
-        <Pencil size={15} className="text-gray-400" />
+        <Pencil size={15} className="text-[var(--text-secondary)]" />
       </Link>
 
       {/* Toggle paid */}

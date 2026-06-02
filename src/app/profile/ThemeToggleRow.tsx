@@ -19,7 +19,7 @@ export function ThemeToggleRow() {
         {isDark ? 'Modo Oscuro' : 'Modo Claro'}
       </span>
       {/* Visual toggle pill */}
-      <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isDark ? 'bg-blue-600' : 'bg-gray-300'}`}>
+      <div className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${isDark ? 'bg-blue-600' : 'bg-[var(--divider)]'}`}>
         <span className={`inline-block h-[18px] w-[18px] transform rounded-full bg-white shadow-md transition-transform ${isDark ? 'translate-x-[22px]' : 'translate-x-[3px]'}`} />
       </div>
     </button>

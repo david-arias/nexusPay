@@ -83,14 +83,14 @@ export function DashboardClient({
             {userInitials}
           </div>
           <div>
-            <p className="text-xs text-gray-500">Hola, {userName}</p>
-            <h1 className="text-lg font-bold text-gray-900 leading-tight">Mis Pagos</h1>
+            <p className="text-xs text-[var(--text-secondary)]">Hola, {userName}</p>
+            <h1 className="text-lg font-bold text-[var(--text-primary)] leading-tight">Mis Pagos</h1>
           </div>
         </div>
         <Link href="/notifications"
-          className="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors tap-none"
+          className="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] transition-colors tap-none"
           aria-label="Notificaciones">
-          <Bell size={22} className="text-gray-700" />
+          <Bell size={22} className="text-[var(--text-primary)]" />
           {hasUrgent && (
             <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white" />
           )}
@@ -103,12 +103,12 @@ export function DashboardClient({
       {/* Payments list */}
       <section className="px-4 mt-6" aria-labelledby="upcoming-heading">
         <div className="flex items-center justify-between mb-3">
-          <h2 id="upcoming-heading" className="text-base font-bold text-gray-900">Próximos Pagos</h2>
+          <h2 id="upcoming-heading" className="text-base font-bold text-[var(--text-primary)]">Próximos Pagos</h2>
           <Link href="/payments" className="text-sm font-medium text-blue-600 tap-none">Ver todo</Link>
         </div>
 
         {entries.length === 0 ? (
-          <div className="text-center py-12 text-gray-400">
+          <div className="text-center py-12 text-[var(--text-secondary)]">
             <p className="text-sm">Sin pagos este mes.</p>
             <Link href="/add" className="mt-3 inline-block text-sm font-semibold text-blue-600">+ Añadir pago</Link>
           </div>

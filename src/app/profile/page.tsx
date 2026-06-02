@@ -41,7 +41,7 @@ export default async function ProfilePage() {
       <div className="px-4 mb-6">
         <Link href="/profile/categories"
           className="flex items-center gap-4 bg-blue-600 rounded-2xl p-4 text-white">
-          <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-[var(--card)]/20 rounded-xl flex items-center justify-center">
             <Grid2X2 size={20} className="text-white" />
           </div>
           <div className="flex-1">

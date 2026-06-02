@@ -75,30 +75,30 @@ export default function CategoriesPage() {
     <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
       <header className="flex items-center gap-3 px-4 pt-12 pb-4">
         <button onClick={() => router.back()}
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <ChevronLeft size={22} className="text-gray-700" />
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+          <ChevronLeft size={22} className="text-[var(--text-primary)]" />
         </button>
         <h1 className="text-lg font-bold text-blue-600 flex-1">Gestionar Categorías</h1>
       </header>
 
-      <p className="px-4 text-sm text-gray-500 mb-4">
+      <p className="px-4 text-sm text-[var(--text-secondary)] mb-4">
         Personaliza tus categorías para un seguimiento preciso de tus gastos y ahorros.
       </p>
 
       <div className="px-4 flex flex-col gap-3">
         {categories.map(cat => (
-          <div key={cat.id} className="flex items-center gap-3 bg-white rounded-2xl border border-gray-100 p-4">
+          <div key={cat.id} className="flex items-center gap-3 bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
             <CategoryIcon icon={cat.icon} color={cat.color} size="md" />
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-gray-900">{cat.name}</p>
-              {cat.description && <p className="text-xs text-gray-400 truncate">{cat.description}</p>}
+              <p className="font-semibold text-[var(--text-primary)]">{cat.name}</p>
+              {cat.description && <p className="text-xs text-[var(--text-secondary)] truncate">{cat.description}</p>}
             </div>
             <button onClick={() => openEdit(cat)}
-              className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-gray-100 tap-none text-gray-400">
+              className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-[var(--card-hover)] tap-none text-[var(--text-secondary)]">
               <Pencil size={16} />
             </button>
             <button onClick={() => handleDelete(cat.id)} disabled={isPending}
-              className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-red-50 tap-none text-gray-400 hover:text-red-500">
+              className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-red-50 tap-none text-[var(--text-secondary)] hover:text-red-500">
               <Trash2 size={16} />
             </button>
           </div>
@@ -114,14 +114,14 @@ export default function CategoriesPage() {
       {/* Bottom sheet — z-[200] above BottomNav */}
       {showForm && (
         <div className="fixed inset-0 bg-black/50 z-[200] flex items-end" onClick={() => setShowForm(false)}>
-          <div className="w-full max-w-md mx-auto bg-white rounded-t-3xl flex flex-col max-h-[90vh]"
+          <div className="w-full max-w-md mx-auto bg-[var(--card)] rounded-t-3xl flex flex-col max-h-[90vh]"
             onClick={e => e.stopPropagation()}>
 
             {/* Sheet header */}
-            <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-gray-100">
-              <h2 className="text-lg font-bold text-gray-900">{editId ? 'Editar' : 'Nueva'} Categoría</h2>
+            <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-[var(--border)]">
+              <h2 className="text-lg font-bold text-[var(--text-primary)]">{editId ? 'Editar' : 'Nueva'} Categoría</h2>
               <button onClick={() => setShowForm(false)}
-                className="h-9 px-3 text-gray-400 text-sm tap-none rounded-lg hover:bg-gray-100 transition-colors">
+                className="h-9 px-3 text-[var(--text-secondary)] text-sm tap-none rounded-lg hover:bg-[var(--card-hover)] transition-colors">
                 Cancelar
               </button>
             </div>
@@ -129,13 +129,13 @@ export default function CategoriesPage() {
             {/* Scrollable content */}
             <div className="overflow-y-auto flex-1 px-6 py-4 flex flex-col gap-4">
               <input value={name} onChange={e => setName(e.target.value)} placeholder="Nombre de la categoría"
-                className="w-full h-12 px-4 rounded-xl bg-gray-100 text-gray-900 text-[15px] outline-none focus:ring-2 focus:ring-blue-500" />
+                className="w-full h-12 px-4 rounded-xl bg-[var(--input-bg)] text-[var(--text-primary)] text-[15px] outline-none focus:ring-2 focus:ring-blue-500" />
               <input value={description} onChange={e => setDescription(e.target.value)} placeholder="Descripción (opcional)"
-                className="w-full h-12 px-4 rounded-xl bg-gray-100 text-gray-900 text-[15px] outline-none focus:ring-2 focus:ring-blue-500" />
+                className="w-full h-12 px-4 rounded-xl bg-[var(--input-bg)] text-[var(--text-primary)] text-[15px] outline-none focus:ring-2 focus:ring-blue-500" />
 
               {/* Color picker */}
               <div>
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Color</p>
+                <p className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Color</p>
                 <div className="flex gap-2 flex-wrap">
                   {COLORS.map(c => (
                     <button key={c} type="button" onClick={() => setColor(c)}
@@ -148,14 +148,14 @@ export default function CategoriesPage() {
 
               {/* Icon picker */}
               <div>
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Ícono</p>
+                <p className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Ícono</p>
                 <div className="grid grid-cols-7 gap-2">
                   {CATEGORY_ICONS.map(({ value, label }) => (
                     <button key={value} type="button" onClick={() => setIcon(value)}
                       title={label}
                       className={cn(
                         'w-11 h-11 flex items-center justify-center rounded-xl tap-none transition-all',
-                        icon === value ? 'ring-2 ring-offset-1' : 'bg-gray-100 hover:bg-gray-200'
+                        icon === value ? 'ring-2 ring-offset-1' : 'bg-[var(--input-bg)] hover:bg-[var(--divider)]'
                       )}
                       style={icon === value ? { backgroundColor: `${color}20`, outline: `2px solid ${color}`, outlineOffset: '2px' } : {}}>
                       <CategoryIcon icon={value} color={icon === value ? color : '#9CA3AF'} size="sm" className="!w-full !h-full !rounded-xl" />
@@ -165,11 +165,11 @@ export default function CategoriesPage() {
               </div>
 
               {/* Preview */}
-              <div className="flex items-center gap-3 bg-gray-50 rounded-xl p-3">
+              <div className="flex items-center gap-3 bg-[var(--surface-low)] rounded-xl p-3">
                 <CategoryIcon icon={icon} color={color} size="md" />
                 <div>
-                  <p className="font-semibold text-gray-900">{name || 'Nombre'}</p>
-                  <p className="text-xs text-gray-400">{description || 'Descripción'}</p>
+                  <p className="font-semibold text-[var(--text-primary)]">{name || 'Nombre'}</p>
+                  <p className="text-xs text-[var(--text-secondary)]">{description || 'Descripción'}</p>
                 </div>
               </div>
 

@@ -1,28 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Design tokens ──────────────────────────────── */
+/* ── Light mode tokens ─────────────────────────── */
 :root {
-  --surface:        #F9F9FF;
-  --card:           #FFFFFF;
-  --border:         #E5E7EB;
-  --text-primary:   #111827;
-  --text-secondary: #6B7280;
-  --primary:        #0058BE;
-  --primary-light:  #EFF6FF;
+  --surface:          #F9F9FF;
+  --surface-low:      #F2F3FD;
+  --card:             #FFFFFF;
+  --card-hover:       #F9FAFB;
+  --border:           #E5E7EB;
+  --text-primary:     #111827;
+  --text-secondary:   #6B7280;
+  --text-disabled:    #9CA3AF;
+  --primary:          #0058BE;
+  --primary-fg:       #FFFFFF;
+  --input-bg:         #F3F4F6;
+  --divider:          #F3F4F6;
 }
 
+/* ── Dark mode tokens (Calm Finance Dark) ──────── */
 .dark {
-  --surface:        #0F0F14;
-  --card:           #1A1A24;
-  --border:         #2D2D3A;
-  --text-primary:   #F1F1F5;
-  --text-secondary: #9CA3AF;
-  --primary:        #3B82F6;
-  --primary-light:  #1E3A5F;
+  --surface:          #0B1326;
+  --surface-low:      #060E20;
+  --card:             #171F33;
+  --card-hover:       #222A3D;
+  --border:           #424754;
+  --text-primary:     #DAE2FD;
+  --text-secondary:   #8C909F;
+  --text-disabled:    #424754;
+  --primary:          #4D8EFF;
+  --primary-fg:       #00285D;
+  --input-bg:         #131B2E;
+  --divider:          #2D3449;
 }
 
 @layer base {
@@ -35,7 +46,7 @@
     background-color: var(--surface);
     color: var(--text-primary);
     padding-bottom: env(safe-area-inset-bottom);
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 
   * { @apply box-border; }
@@ -45,4 +56,13 @@
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   .tap-none { -webkit-tap-highlight-color: transparent; }
+
+  /* Reusable token classes */
+  .bg-surface   { background-color: var(--surface); }
+  .bg-card      { background-color: var(--card); }
+  .bg-input     { background-color: var(--input-bg); }
+  .border-theme { border-color: var(--border); }
+  .text-primary-theme   { color: var(--text-primary); }
+  .text-secondary-theme { color: var(--text-secondary); }
+  .divide-theme > * + * { border-color: var(--divider); }
 }

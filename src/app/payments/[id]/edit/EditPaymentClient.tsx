@@ -62,10 +62,10 @@ export function EditPaymentClient({ entry, categories, usdToCOP }: Props) {
     <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
       <header className="flex items-center gap-3 px-4 pt-12 pb-4">
         <button onClick={() => router.back()}
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <ChevronLeft size={22} className="text-gray-700" />
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+          <ChevronLeft size={22} className="text-[var(--text-primary)]" />
         </button>
-        <h1 className="text-lg font-bold text-gray-900 flex-1">Editar Pago</h1>
+        <h1 className="text-lg font-bold text-[var(--text-primary)] flex-1">Editar Pago</h1>
         <button onClick={() => setShowDeleteConfirm(true)}
           className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-red-50 tap-none text-red-500">
           <Trash2 size={20} />
@@ -75,23 +75,23 @@ export function EditPaymentClient({ entry, categories, usdToCOP }: Props) {
       <form onSubmit={handleSave} className="flex flex-col gap-4 px-4">
 
         {/* Nombre */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
-          <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-500 block mb-2">
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
+          <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)] block mb-2">
             Nombre del Pago
           </label>
           <input name="name" type="text" required value={name} onChange={e => setName(e.target.value)}
-            className="w-full text-[15px] text-gray-900 bg-transparent border-none outline-none" />
+            className="w-full text-[15px] text-[var(--text-primary)] bg-transparent border-none outline-none" />
         </div>
 
         {/* Monto + moneda */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
           <div className="flex items-center justify-between mb-3">
-            <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">Monto</label>
-            <div className="flex bg-gray-100 rounded-xl p-0.5">
+            <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)]">Monto</label>
+            <div className="flex bg-[var(--input-bg)] rounded-xl p-0.5">
               {(['COP', 'USD'] as const).map(c => (
                 <button key={c} type="button" onClick={() => setCurrency(c)}
                   className={cn('px-3 py-1 rounded-lg text-xs font-bold transition-all tap-none',
-                    currency === c ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500')}>
+                    currency === c ? 'bg-blue-600 text-white shadow-sm' : 'text-[var(--text-secondary)]')}>
                   {c}
                 </button>
               ))}
@@ -101,12 +101,12 @@ export function EditPaymentClient({ entry, categories, usdToCOP }: Props) {
             <span className="text-blue-600 font-bold text-xl">{currency === 'COP' ? '$' : 'US$'}</span>
             <input name="amount" type="number" inputMode="decimal" step="0.01" min="0.01" required
               value={amount} onChange={e => setAmount(e.target.value)}
-              className="flex-1 text-2xl font-bold text-gray-900 bg-transparent border-none outline-none tabular-nums" />
+              className="flex-1 text-2xl font-bold text-[var(--text-primary)] bg-transparent border-none outline-none tabular-nums" />
           </div>
           {amountNum > 0 && (
-            <div className="mt-3 pt-3 border-t border-gray-100">
-              <p className="text-xs text-gray-400">Tasa: 1 USD = {formatCOP(usdToCOP)}</p>
-              <p className="text-sm font-semibold text-gray-600 mt-0.5">
+            <div className="mt-3 pt-3 border-t border-[var(--border)]">
+              <p className="text-xs text-[var(--text-secondary)]">Tasa: 1 USD = {formatCOP(usdToCOP)}</p>
+              <p className="text-sm font-semibold text-[var(--text-secondary)] mt-0.5">
                 ≈ {currency === 'USD' ? formatCOP(amountNum * usdToCOP) + ' COP' : formatUSD(amountNum / usdToCOP) + ' USD'}
               </p>
             </div>
@@ -114,15 +114,15 @@ export function EditPaymentClient({ entry, categories, usdToCOP }: Props) {
         </div>
 
         {/* Día */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
-          <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-500 block mb-3">
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
+          <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)] block mb-3">
             Día de Vencimiento
           </label>
           <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
             {days.map(day => (
               <button key={day} type="button" onClick={() => setSelectedDay(day)}
                 className={cn('flex-shrink-0 w-10 h-10 rounded-full text-sm font-semibold transition-all tap-none',
-                  selectedDay === day ? 'bg-blue-600 text-white shadow-sm' : 'bg-gray-100 text-gray-600')}>
+                  selectedDay === day ? 'bg-blue-600 text-white shadow-sm' : 'bg-[var(--input-bg)] text-[var(--text-secondary)]')}>
                 {day}
               </button>
             ))}
@@ -131,13 +131,13 @@ export function EditPaymentClient({ entry, categories, usdToCOP }: Props) {
 
         {/* Categoría */}
         {categories.length > 0 && (
-          <div className="bg-white rounded-2xl border border-gray-100 p-4">
-            <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-500 block mb-3">Categoría</label>
+          <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
+            <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)] block mb-3">Categoría</label>
             <div className="flex flex-wrap gap-2">
               {categories.map(cat => (
                 <button key={cat.id} type="button" onClick={() => setSelectedCategory(cat.id)}
                   className={cn('flex items-center gap-2 px-3 py-2 rounded-full text-sm font-medium border transition-all tap-none',
-                    selectedCategory === cat.id ? 'border-transparent text-white' : 'border-gray-200 text-gray-700 bg-gray-50')}
+                    selectedCategory === cat.id ? 'border-transparent text-white' : 'border-[var(--border)] text-[var(--text-primary)] bg-[var(--surface-low)]')}
                   style={selectedCategory === cat.id ? { backgroundColor: cat.color } : {}}>
                   <CategoryIcon icon={cat.icon} color={selectedCategory === cat.id ? '#fff' : cat.color} size="sm" />
                   {cat.name}
@@ -148,15 +148,15 @@ export function EditPaymentClient({ entry, categories, usdToCOP }: Props) {
         )}
 
         {/* Notas */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
-          <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-500 block mb-2">Notas</label>
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
+          <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)] block mb-2">Notas</label>
           <textarea name="notes" rows={2} value={notes} onChange={e => setNotes(e.target.value)}
             placeholder="Opcional..."
-            className="w-full text-[15px] text-gray-900 placeholder-gray-400 bg-transparent border-none outline-none resize-none" />
+            className="w-full text-[15px] text-[var(--text-primary)] placeholder-[var(--text-disabled)] bg-transparent border-none outline-none resize-none" />
         </div>
 
         {/* Recurrente */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
           <Toggle checked={isRecurring} onChange={setIsRecurring}
             label="Recurrente" description="Se cobra automáticamente cada mes" />
         </div>
@@ -174,20 +174,20 @@ export function EditPaymentClient({ entry, categories, usdToCOP }: Props) {
       {/* Delete confirmation modal */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-end" onClick={() => setShowDeleteConfirm(false)}>
-          <div className="w-full max-w-md mx-auto bg-white rounded-t-3xl p-6 flex flex-col gap-4"
+          <div className="w-full max-w-md mx-auto bg-[var(--card)] rounded-t-3xl p-6 flex flex-col gap-4"
             onClick={e => e.stopPropagation()}>
             <div className="text-center">
               <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Trash2 size={22} className="text-red-600" />
               </div>
-              <h3 className="text-lg font-bold text-gray-900">¿Eliminar pago?</h3>
-              <p className="text-sm text-gray-500 mt-1">
+              <h3 className="text-lg font-bold text-[var(--text-primary)]">¿Eliminar pago?</h3>
+              <p className="text-sm text-[var(--text-secondary)] mt-1">
                 Se eliminarán todos los registros de <strong>{payment?.name}</strong>. Esta acción no se puede deshacer.
               </p>
             </div>
             <div className="flex gap-3">
               <button onClick={() => setShowDeleteConfirm(false)}
-                className="flex-1 h-12 rounded-xl bg-gray-100 text-gray-700 font-semibold tap-none">
+                className="flex-1 h-12 rounded-xl bg-[var(--input-bg)] text-[var(--text-primary)] font-semibold tap-none">
                 Cancelar
               </button>
               <button onClick={handleDelete} disabled={isDeleting}

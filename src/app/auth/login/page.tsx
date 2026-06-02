@@ -20,34 +20,34 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(160deg, #EFF6FF 0%, #F9F9FF 60%)' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: 'var(--surface)' }}>
       <div className="flex-1 flex flex-col justify-center px-6 py-12">
 
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold text-blue-600 mb-6">NexusPay</h1>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Bienvenido de nuevo</h2>
-          <p className="text-gray-500 text-sm leading-relaxed">
+          <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">Bienvenido de nuevo</h2>
+          <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
             Mantén tus finanzas bajo control y sin sorpresas.
           </p>
         </div>
 
         <form action={handleLogin} className="flex flex-col gap-5">
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="email" className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
+            <label htmlFor="email" className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)]">
               Correo Electrónico
             </label>
             <input
               id="email" name="email" type="email" required autoComplete="email"
               placeholder="nombre@ejemplo.com"
-              className="w-full h-14 px-4 rounded-2xl bg-white border border-gray-200
-                         text-gray-900 placeholder-gray-400 text-[15px]
+              className="w-full h-14 px-4 rounded-2xl bg-[var(--card)] border border-[var(--border)]
+                         text-[var(--text-primary)] placeholder-[var(--text-disabled)] text-[15px]
                          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             />
           </div>
 
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
-              <label htmlFor="password" className="text-[11px] font-semibold uppercase tracking-widest text-gray-500">
+              <label htmlFor="password" className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)]">
                 Contraseña
               </label>
               <Link href="/auth/forgot-password" className="text-xs font-semibold text-blue-600 hover:underline">
@@ -58,12 +58,12 @@ export default function LoginPage() {
               <input
                 id="password" name="password" type={showPassword ? 'text' : 'password'}
                 required autoComplete="current-password" placeholder="••••••••"
-                className="w-full h-14 px-4 pr-12 rounded-2xl bg-white border border-gray-200
-                           text-gray-900 placeholder-gray-400 text-[15px]
+                className="w-full h-14 px-4 pr-12 rounded-2xl bg-[var(--card)] border border-[var(--border)]
+                           text-[var(--text-primary)] placeholder-[var(--text-disabled)] text-[15px]
                            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
               <button type="button" onClick={() => setShowPassword(v => !v)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 tap-none"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-[var(--text-secondary)] tap-none"
                 aria-label={showPassword ? 'Ocultar' : 'Mostrar'}>
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
@@ -87,7 +87,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-500 mt-8">
+        <p className="text-center text-sm text-[var(--text-secondary)] mt-8">
           ¿No tienes una cuenta?{' '}
           <Link href="/auth/register" className="font-semibold text-blue-600 hover:underline">
             Registrarse

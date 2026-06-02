@@ -38,7 +38,7 @@ export function BottomNav() {
                 className={cn(
                   'flex flex-col items-center justify-center gap-0.5',
                   'min-w-[56px] min-h-[44px] tap-none',
-                  isActive && !isAdd ? 'text-primary-600' : 'text-gray-400',
+                  isActive && !isAdd ? 'text-[var(--primary)]' : 'text-[var(--text-secondary)]',
                   'transition-colors duration-150'
                 )}
                 aria-current={isActive ? 'page' : undefined}
@@ -46,7 +46,7 @@ export function BottomNav() {
                 {isAdd ? (
                   /* Prominent "Add" button */
                   <span className="flex items-center justify-center w-12 h-12
-                                   bg-primary-600 rounded-full shadow-lg
+                                   bg-blue-600 rounded-full shadow-lg
                                    text-white -mt-4">
                     <Icon size={22} strokeWidth={2.5} />
                   </span>
@@ -55,11 +55,11 @@ export function BottomNav() {
                     <Icon
                       size={22}
                       strokeWidth={isActive ? 2.5 : 1.8}
-                      className={isActive ? 'text-primary-600' : 'text-gray-400'}
+                      className={isActive ? 'text-[var(--primary)]' : 'text-[var(--text-secondary)]'}
                     />
                     <span className={cn(
                       'text-[10px] font-medium leading-none',
-                      isActive ? 'text-primary-600' : 'text-gray-400'
+                      isActive ? 'text-[var(--primary)]' : 'text-[var(--text-secondary)]'
                     )}>
                       {label}
                     </span>

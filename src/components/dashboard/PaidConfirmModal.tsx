@@ -33,23 +33,23 @@ export function PaidConfirmModal({ entry, onConfirm, onCancel, isPending }: Paid
   return (
     <div className="fixed inset-0 bg-black/50 z-[200] flex items-end" onClick={onCancel}>
       <div
-        className="w-full max-w-md mx-auto bg-white rounded-t-3xl flex flex-col"
+        className="w-full max-w-md mx-auto bg-[var(--card)] rounded-t-3xl flex flex-col"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-gray-100">
-          <h2 className="text-lg font-bold text-gray-900">Confirmar pago</h2>
-          <button onClick={onCancel} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-            <X size={18} className="text-gray-500" />
+        <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-[var(--border)]">
+          <h2 className="text-lg font-bold text-[var(--text-primary)]">Confirmar pago</h2>
+          <button onClick={onCancel} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+            <X size={18} className="text-[var(--text-secondary)]" />
           </button>
         </div>
 
         <div className="px-6 py-5 flex flex-col gap-4">
           {/* Payment name + scheduled amount */}
-          <div className="flex items-center justify-between bg-gray-50 rounded-2xl p-4">
+          <div className="flex items-center justify-between bg-[var(--surface-low)] rounded-2xl p-4">
             <div>
-              <p className="font-bold text-gray-900">{entry.payment.name}</p>
-              <p className="text-xs text-gray-500">Monto presupuestado</p>
+              <p className="font-bold text-[var(--text-primary)]">{entry.payment.name}</p>
+              <p className="text-xs text-[var(--text-secondary)]">Monto presupuestado</p>
             </div>
             <p className="font-bold text-blue-600 tabular-nums">
               {formatByCurrency(entry.payment.amount, entry.payment.currency ?? 'COP')}
@@ -58,15 +58,15 @@ export function PaidConfirmModal({ entry, onConfirm, onCancel, isPending }: Paid
 
           {/* Monto real pagado */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">
+            <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)]">
               Monto real pagado
             </label>
-            <div className="flex items-center gap-2 bg-gray-100 rounded-xl px-4 h-12">
+            <div className="flex items-center gap-2 bg-[var(--input-bg)] rounded-xl px-4 h-12">
               <span className="text-blue-600 font-bold">$</span>
               <input
                 type="number" inputMode="decimal" step="0.01"
                 value={amount} onChange={e => setAmount(e.target.value)}
-                className="flex-1 bg-transparent text-[15px] font-semibold text-gray-900 outline-none tabular-nums"
+                className="flex-1 bg-transparent text-[15px] font-semibold text-[var(--text-primary)] outline-none tabular-nums"
               />
             </div>
             {parseFloat(amount) !== entry.payment.amount && (
@@ -78,19 +78,19 @@ export function PaidConfirmModal({ entry, onConfirm, onCancel, isPending }: Paid
 
           {/* Fecha de pago */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">
+            <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)]">
               Fecha de pago
             </label>
             <input
               type="date" value={date} max={today}
               onChange={e => setDate(e.target.value)}
-              className="w-full h-12 px-4 bg-gray-100 rounded-xl text-[15px] text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full h-12 px-4 bg-[var(--input-bg)] rounded-xl text-[15px] text-[var(--text-primary)] outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           {/* Método de pago */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">
+            <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)]">
               Método de pago
             </label>
             <div className="flex flex-wrap gap-2">
@@ -100,7 +100,7 @@ export function PaidConfirmModal({ entry, onConfirm, onCancel, isPending }: Paid
                     'px-3 py-1.5 rounded-full text-sm font-medium border transition-all tap-none',
                     method === m
                       ? 'bg-blue-600 border-blue-600 text-white'
-                      : 'border-gray-200 text-gray-600 bg-white hover:bg-gray-50'
+                      : 'border-[var(--border)] text-[var(--text-secondary)] bg-[var(--card)] hover:bg-[var(--card-hover)]'
                   )}>
                   {m}
                 </button>

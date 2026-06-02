@@ -44,10 +44,10 @@ export default function EditSpacePage({ params }: { params: Promise<{ id: string
     <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
       <header className="flex items-center gap-3 px-4 pt-12 pb-4">
         <button onClick={() => router.back()}
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <ChevronLeft size={22} className="text-gray-700" />
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+          <ChevronLeft size={22} className="text-[var(--text-primary)]" />
         </button>
-        <h1 className="text-lg font-bold text-gray-900">Editar Espacio</h1>
+        <h1 className="text-lg font-bold text-[var(--text-primary)]">Editar Espacio</h1>
       </header>
 
       {!loaded ? (
@@ -56,23 +56,23 @@ export default function EditSpacePage({ params }: { params: Promise<{ id: string
         </div>
       ) : (
         <form onSubmit={handleSave} className="flex flex-col gap-4 px-4">
-          <div className="bg-white rounded-2xl border border-gray-100 p-4 flex flex-col gap-4">
+          <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4 flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
-              <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">
+              <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)]">
                 Nombre del espacio
               </label>
               <input value={name} onChange={e => setName(e.target.value)} required
                 placeholder="Ej. Mi Casa, Oficina"
-                className="w-full h-12 px-4 rounded-xl bg-gray-100 text-[15px] text-gray-900
+                className="w-full h-12 px-4 rounded-xl bg-[var(--input-bg)] text-[15px] text-[var(--text-primary)]
                            outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">
+              <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)]">
                 Descripción (opcional)
               </label>
               <textarea value={description} onChange={e => setDescription(e.target.value)}
                 rows={3} placeholder="¿Para qué es este espacio?"
-                className="w-full px-4 py-3 rounded-xl bg-gray-100 text-[15px] text-gray-900
+                className="w-full px-4 py-3 rounded-xl bg-[var(--input-bg)] text-[15px] text-[var(--text-primary)]
                            outline-none focus:ring-2 focus:ring-blue-500 resize-none" />
             </div>
           </div>

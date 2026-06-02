@@ -18,8 +18,8 @@ export function Toggle({ checked, onChange, label, description }: ToggleProps) {
     <div className="flex items-center justify-between gap-4">
       {(label || description) && (
         <div>
-          {label && <p className="text-[15px] font-semibold text-gray-900">{label}</p>}
-          {description && <p className="text-xs text-gray-500 mt-0.5">{description}</p>}
+          {label && <p className="text-[15px] font-semibold text-[var(--text-primary)]">{label}</p>}
+          {description && <p className="text-xs text-[var(--text-secondary)] mt-0.5">{description}</p>}
         </div>
       )}
       <button
@@ -30,7 +30,7 @@ export function Toggle({ checked, onChange, label, description }: ToggleProps) {
         className={cn(
           'relative inline-flex h-6 w-11 flex-shrink-0 items-center rounded-full',
           'transition-colors duration-200 focus:outline-none tap-none',
-          checked ? 'bg-blue-600' : 'bg-gray-300'
+          checked ? 'bg-blue-600' : 'bg-[var(--divider)]'
         )}
       >
         <span

@@ -26,10 +26,10 @@ export default function DeleteSpacePage({ params }: { params: Promise<{ id: stri
     <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
       <header className="flex items-center gap-3 px-4 pt-12 pb-4">
         <button onClick={() => router.back()}
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <ChevronLeft size={22} className="text-gray-700" />
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+          <ChevronLeft size={22} className="text-[var(--text-primary)]" />
         </button>
-        <h1 className="text-lg font-bold text-gray-900">Eliminar Espacio</h1>
+        <h1 className="text-lg font-bold text-[var(--text-primary)]">Eliminar Espacio</h1>
       </header>
 
       <div className="px-4 flex flex-col items-center gap-6 pt-8">
@@ -37,8 +37,8 @@ export default function DeleteSpacePage({ params }: { params: Promise<{ id: stri
           <Trash2 size={36} className="text-red-600" />
         </div>
         <div className="text-center">
-          <h2 className="text-xl font-bold text-gray-900 mb-2">¿Eliminar este espacio?</h2>
-          <p className="text-sm text-gray-500 leading-relaxed">
+          <h2 className="text-xl font-bold text-[var(--text-primary)] mb-2">¿Eliminar este espacio?</h2>
+          <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
             Esta acción eliminará el espacio y <strong>todos los pagos asociados</strong> permanentemente. No se puede deshacer.
           </p>
         </div>
@@ -51,7 +51,7 @@ export default function DeleteSpacePage({ params }: { params: Promise<{ id: stri
             Sí, eliminar espacio
           </button>
           <button onClick={() => router.back()}
-            className="w-full h-14 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-[15px]
+            className="w-full h-14 bg-[var(--input-bg)] hover:bg-[var(--divider)] text-[var(--text-primary)] font-semibold text-[15px]
                        rounded-2xl tap-none transition-colors">
             Cancelar
           </button>

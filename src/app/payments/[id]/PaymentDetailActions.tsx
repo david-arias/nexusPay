@@ -74,7 +74,7 @@ export function PaymentDetailActions({ entry, payment }: Props) {
           onClick={handleUnpaid}
           disabled={isPending}
           className={cn(
-            'w-full h-14 bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold text-[15px]',
+            'w-full h-14 bg-[var(--input-bg)] hover:bg-[var(--divider)] text-[var(--text-secondary)] font-semibold text-[15px]',
             'rounded-2xl flex items-center justify-center gap-2 transition-colors tap-none',
             'disabled:opacity-60'
           )}

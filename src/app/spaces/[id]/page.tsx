@@ -51,36 +51,36 @@ export default async function SpaceDetailPage({ params }: { params: Promise<{ id
     <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
       <header className="flex items-center gap-3 px-4 pt-12 pb-4">
         <Link href="/spaces"
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <ChevronLeft size={22} className="text-gray-700" />
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+          <ChevronLeft size={22} className="text-[var(--text-primary)]" />
         </Link>
-        <h1 className="text-lg font-bold text-gray-900 flex-1">Detalle del Espacio</h1>
+        <h1 className="text-lg font-bold text-[var(--text-primary)] flex-1">Detalle del Espacio</h1>
         <Link href={`/spaces/${id}/edit`}
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <Pencil size={20} className="text-gray-600" />
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+          <Pencil size={20} className="text-[var(--text-secondary)]" />
         </Link>
       </header>
 
       <div className="px-4 flex flex-col gap-4">
         {/* Title */}
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">{space.name}</h2>
-          {space.description && <p className="text-sm text-gray-500 mt-0.5">{space.description}</p>}
+          <h2 className="text-2xl font-bold text-[var(--text-primary)]">{space.name}</h2>
+          {space.description && <p className="text-sm text-[var(--text-secondary)] mt-0.5">{space.description}</p>}
         </div>
 
         {/* Total pendiente */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-5">
-          <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-400 mb-1">Total Pendiente</p>
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-5">
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)] mb-1">Total Pendiente</p>
           <p className="text-3xl font-bold text-blue-600 tabular-nums">
             {formatByCurrency(totalPending, 'COP')}
           </p>
           {total > 0 && (
             <div className="mt-3">
-              <div className="flex justify-between text-xs text-gray-400 mb-1">
+              <div className="flex justify-between text-xs text-[var(--text-secondary)] mb-1">
                 <span>{Math.round((totalPaid / total) * 100)}% pagado</span>
                 <span>{formatByCurrency(totalPaid, 'COP')} pagado</span>
               </div>
-              <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-[var(--input-bg)] rounded-full overflow-hidden">
                 <div className="h-full bg-green-500 rounded-full" style={{ width: `${(totalPaid / total) * 100}%` }} />
               </div>
             </div>
@@ -89,11 +89,11 @@ export default async function SpaceDetailPage({ params }: { params: Promise<{ id
 
         {/* Pagos asignados */}
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-400 mb-2 px-1">
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)] mb-2 px-1">
             Pagos Asignados — {now.toLocaleString('es-CO', { month: 'long' })}
           </p>
           {(entries ?? []).length === 0 ? (
-            <div className="text-center py-8 text-gray-400">
+            <div className="text-center py-8 text-[var(--text-secondary)]">
               <p className="text-sm">Sin pagos asignados este mes.</p>
               <Link href="/add" className="mt-2 inline-block text-sm font-semibold text-blue-600">+ Añadir pago</Link>
             </div>
@@ -104,18 +104,18 @@ export default async function SpaceDetailPage({ params }: { params: Promise<{ id
                 const isPaid = entry.status === 'paid'
                 return (
                   <Link key={entry.id} href={`/payments/${entry.id}`}
-                    className="flex items-center gap-3 bg-white rounded-2xl border border-gray-100 p-4">
+                    className="flex items-center gap-3 bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
                     <CategoryIcon icon={cat?.icon ?? 'circle'} color={cat?.color ?? '#3B82F6'} size="md" />
                     <div className="flex-1 min-w-0">
-                      <p className={cn('font-semibold text-[15px] truncate', isPaid && 'line-through text-gray-400')}>
+                      <p className={cn('font-semibold text-[15px] truncate', isPaid && 'line-through text-[var(--text-secondary)]')}>
                         {entry.payment?.name}
                       </p>
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-[var(--text-secondary)]">
                         {isPaid ? 'Pagado' : `Vence día ${entry.payment?.due_day}`}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold tabular-nums text-gray-900">
+                      <p className="font-bold tabular-nums text-[var(--text-primary)]">
                         {formatByCurrency(entry.payment?.amount ?? 0, entry.payment?.currency ?? 'COP')}
                       </p>
                       <p className={cn('text-[10px] font-bold uppercase',
@@ -138,7 +138,7 @@ export default async function SpaceDetailPage({ params }: { params: Promise<{ id
             <Trash2 size={18} />
             Eliminar Espacio
           </Link>
-          <p className="text-xs text-gray-400 text-center mt-2">
+          <p className="text-xs text-[var(--text-secondary)] text-center mt-2">
             Esta acción no se puede deshacer y eliminará todos los registros asociados.
           </p>
         </div>

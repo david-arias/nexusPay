@@ -40,11 +40,11 @@ export default async function NotificationsPage() {
     <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
       <header className="flex items-center gap-3 px-4 pt-12 pb-4">
         <Link href="/dashboard"
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <ChevronLeft size={22} className="text-gray-700" />
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+          <ChevronLeft size={22} className="text-[var(--text-primary)]" />
         </Link>
-        <h1 className="text-lg font-bold text-gray-900 flex-1">Notificaciones</h1>
-        <Bell size={22} className="text-gray-400 mr-1" />
+        <h1 className="text-lg font-bold text-[var(--text-primary)] flex-1">Notificaciones</h1>
+        <Bell size={22} className="text-[var(--text-secondary)] mr-1" />
       </header>
 
       <div className="px-4 flex flex-col gap-5">
@@ -53,8 +53,8 @@ export default async function NotificationsPage() {
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
               <Check size={28} className="text-green-600" />
             </div>
-            <p className="font-semibold text-gray-900">¡Todo al día!</p>
-            <p className="text-sm text-gray-500">No tienes pagos vencidos ni próximos a vencer.</p>
+            <p className="font-semibold text-[var(--text-primary)]">¡Todo al día!</p>
+            <p className="text-sm text-[var(--text-secondary)]">No tienes pagos vencidos ni próximos a vencer.</p>
           </div>
         )}
 
@@ -113,17 +113,17 @@ function NotifGroup({ title, color, items, labelFn }: {
           const cat = n.payment?.category
           return (
             <Link key={n.id} href={`/payments/${n.id}`}
-              className="flex items-center gap-3 bg-white rounded-2xl border border-gray-100 p-4">
+              className="flex items-center gap-3 bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
               <CategoryIcon icon={cat?.icon ?? 'circle'} color={cat?.color ?? '#3B82F6'} size="md" />
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-gray-900 truncate">{n.payment?.name}</p>
+                <p className="font-semibold text-[var(--text-primary)] truncate">{n.payment?.name}</p>
                 <p className={cn('text-xs font-medium mt-0.5 flex items-center gap-1', colors.title)}>
                   <span className={cn('w-1.5 h-1.5 rounded-full', colors.dot)} />
                   {labelFn(n)}
                 </p>
               </div>
               <div className="text-right">
-                <p className="font-bold text-gray-900 tabular-nums">
+                <p className="font-bold text-[var(--text-primary)] tabular-nums">
                   {formatByCurrency(n.payment?.amount ?? 0, n.payment?.currency ?? 'COP')}
                 </p>
                 <span className={cn('text-[10px] font-bold uppercase px-2 py-0.5 rounded-full', colors.badge)}>

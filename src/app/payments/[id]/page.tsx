@@ -32,22 +32,22 @@ export default async function PaymentDetailPage({ params }: { params: Promise<{ 
     <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
       <header className="flex items-center gap-3 px-4 pt-12 pb-4">
         <Link href="/payments"
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <ChevronLeft size={22} className="text-gray-700" />
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+          <ChevronLeft size={22} className="text-[var(--text-primary)]" />
         </Link>
-        <h1 className="text-lg font-bold text-gray-900 flex-1">Detalle del Pago</h1>
+        <h1 className="text-lg font-bold text-[var(--text-primary)] flex-1">Detalle del Pago</h1>
         <Link href={`/payments/${id}/edit`}
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <Pencil size={20} className="text-gray-600" />
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+          <Pencil size={20} className="text-[var(--text-secondary)]" />
         </Link>
       </header>
 
       <div className="px-4 flex flex-col gap-4">
 
         {/* Hero card */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-6 flex flex-col items-center text-center">
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-6 flex flex-col items-center text-center">
           <CategoryIcon icon={cat?.icon ?? 'circle'} color={cat?.color ?? '#3B82F6'} size="lg" />
-          <h2 className="text-xl font-bold text-gray-900 mt-3">{payment?.name}</h2>
+          <h2 className="text-xl font-bold text-[var(--text-primary)] mt-3">{payment?.name}</h2>
           <p className="text-3xl font-bold mt-2 tabular-nums" style={{ color: cat?.color ?? '#3B82F6' }}>
             {formatByCurrency(payment?.amount ?? 0, payment?.currency ?? 'COP')}
           </p>
@@ -62,7 +62,7 @@ export default async function PaymentDetailPage({ params }: { params: Promise<{ 
         </div>
 
         {/* Details */}
-        <div className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-50">
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] divide-y divide-[var(--divider)]">
           <DetailRow icon={<Calendar size={18} />} label="Vencimiento"
             value={format(parseISO(entry.due_date), "d 'de' MMMM yyyy", { locale: es })} />
           <DetailRow icon={<Tag size={18} />} label="Categoría" value={cat?.name ?? '—'} />
@@ -86,12 +86,12 @@ export default async function PaymentDetailPage({ params }: { params: Promise<{ 
 
         {/* Notes */}
         {payment?.notes && (
-          <div className="bg-white rounded-2xl border border-gray-100 p-4">
+          <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
             <div className="flex items-center gap-2 mb-2">
-              <FileText size={15} className="text-gray-400" />
-              <p className="text-[11px] font-semibold uppercase tracking-widest text-gray-400">Notas de pago</p>
+              <FileText size={15} className="text-[var(--text-secondary)]" />
+              <p className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)]">Notas de pago</p>
             </div>
-            <p className="text-[15px] text-gray-700 leading-relaxed whitespace-pre-wrap">{payment.notes}</p>
+            <p className="text-[15px] text-[var(--text-primary)] leading-relaxed whitespace-pre-wrap">{payment.notes}</p>
           </div>
         )}
 
@@ -108,9 +108,9 @@ export default async function PaymentDetailPage({ params }: { params: Promise<{ 
 function DetailRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div className="flex items-center gap-3 px-4 py-4">
-      <span className="text-gray-400">{icon}</span>
-      <span className="flex-1 text-sm text-gray-500">{label}</span>
-      <span className="text-sm font-semibold text-gray-900 text-right max-w-[55%]">{value}</span>
+      <span className="text-[var(--text-secondary)]">{icon}</span>
+      <span className="flex-1 text-sm text-[var(--text-secondary)]">{label}</span>
+      <span className="text-sm font-semibold text-[var(--text-primary)] text-right max-w-[55%]">{value}</span>
     </div>
   )
 }

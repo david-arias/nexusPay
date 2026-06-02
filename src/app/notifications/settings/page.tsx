@@ -54,24 +54,24 @@ export default function NotificationSettingsPage() {
     <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
       <header className="flex items-center gap-3 px-4 pt-12 pb-4">
         <button onClick={() => router.back()}
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <ChevronLeft size={22} className="text-gray-700" />
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none">
+          <ChevronLeft size={22} className="text-[var(--text-primary)]" />
         </button>
-        <h1 className="text-lg font-bold text-gray-900">Recordatorios</h1>
+        <h1 className="text-lg font-bold text-[var(--text-primary)]">Recordatorios</h1>
       </header>
 
       <div className="px-4 flex flex-col gap-4">
 
         {/* Push permission card */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-5">
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-5">
           <div className="flex items-center gap-3 mb-4">
             {permission === 'granted'
               ? <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center"><Bell size={20} className="text-green-600" /></div>
               : <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center"><BellOff size={20} className="text-amber-600" /></div>
             }
             <div>
-              <p className="font-semibold text-gray-900">Notificaciones del sistema</p>
-              <p className="text-xs text-gray-500">
+              <p className="font-semibold text-[var(--text-primary)]">Notificaciones del sistema</p>
+              <p className="text-xs text-[var(--text-secondary)]">
                 {permission === 'granted' ? 'Activadas ✓' : permission === 'denied' ? 'Bloqueadas en el navegador' : 'Sin activar'}
               </p>
             </div>
@@ -96,7 +96,7 @@ export default function NotificationSettingsPage() {
         </div>
 
         {/* Settings */}
-        <div className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-50">
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] divide-y divide-[var(--divider)]">
           <div className="p-4">
             <Toggle
               checked={remindOnDueDay}
@@ -116,14 +116,14 @@ export default function NotificationSettingsPage() {
         </div>
 
         {/* Days before */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4">
-          <p className="font-semibold text-gray-900 mb-1">Avisar con anticipación</p>
-          <p className="text-xs text-gray-500 mb-3">Días antes del vencimiento para recordarte</p>
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
+          <p className="font-semibold text-[var(--text-primary)] mb-1">Avisar con anticipación</p>
+          <p className="text-xs text-[var(--text-secondary)] mb-3">Días antes del vencimiento para recordarte</p>
           <div className="flex gap-2">
             {[1, 2, 3, 5, 7].map(d => (
               <button key={d} type="button" onClick={() => setRemindDaysBefore(d)}
                 className={`flex-1 h-10 rounded-xl text-sm font-semibold tap-none transition-all
-                  ${remindDaysBefore === d ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'}`}>
+                  ${remindDaysBefore === d ? 'bg-blue-600 text-white' : 'bg-[var(--input-bg)] text-[var(--text-secondary)]'}`}>
                 {d}d
               </button>
             ))}
@@ -137,7 +137,7 @@ export default function NotificationSettingsPage() {
           {saved ? <><Check size={20} /> ¡Guardado!</> : 'Guardar preferencias'}
         </button>
 
-        <p className="text-xs text-gray-400 text-center leading-relaxed">
+        <p className="text-xs text-[var(--text-secondary)] text-center leading-relaxed">
           Las notificaciones funcionan incluso cuando la app está cerrada (requiere permiso del navegador).
           En iOS, instala la app en tu pantalla de inicio para habilitarlas.
         </p>
