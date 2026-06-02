@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { ChevronRight, ExternalLink, Bell, Lock, User, Grid2X2 } from 'lucide-react'
+import { ChevronRight, Bell, Lock, User, Grid2X2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getCategories } from '@/lib/supabase/queries'
 import { BottomNav } from '@/components/layout/BottomNav'
@@ -78,15 +78,6 @@ export default async function ProfilePage() {
         </div>
       </div>
 
-      {/* More section */}
-      <div className="px-4 mb-6">
-        <p className="text-xs font-semibold text-gray-400 mb-2 px-1">Más</p>
-        <div className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-50">
-          <SettingRow href="https://help.nexuspay.app" icon={<ExternalLink size={18} />} label="Centro de Ayuda" external />
-          <SettingRow href="https://nexuspay.app/privacy" icon={<ExternalLink size={18} />} label="Políticas de Privacidad" external />
-        </div>
-      </div>
-
       {/* Logout */}
       <div className="px-4">
         <LogoutButton />
@@ -97,32 +88,13 @@ export default async function ProfilePage() {
   )
 }
 
-function SettingRow({
-  href, icon, label, badge, external,
-}: {
-  href: string
-  icon: React.ReactNode
-  label: string
-  badge?: string
-  external?: boolean
-}) {
+function SettingRow({ href, icon, label, badge }: { href: string; icon: React.ReactNode; label: string; badge?: string }) {
   return (
-    <Link
-      href={href}
-      target={external ? '_blank' : undefined}
-      className="flex items-center gap-3 px-4 py-4 hover:bg-gray-50 transition-colors tap-none"
-    >
+    <Link href={href} className="flex items-center gap-3 px-4 py-4 hover:bg-gray-50 transition-colors tap-none">
       <span className="text-gray-500">{icon}</span>
       <span className="flex-1 text-[15px] text-gray-900">{label}</span>
-      {badge && (
-        <span className="bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-          {badge}
-        </span>
-      )}
-      {external
-        ? <ExternalLink size={16} className="text-gray-400" />
-        : <ChevronRight size={18} className="text-gray-400" />
-      }
+      {badge && <span className="bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{badge}</span>}
+      <ChevronRight size={18} className="text-gray-400" />
     </Link>
   )
 }
