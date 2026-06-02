@@ -19,7 +19,7 @@ export default function CategoriesPage() {
   const [name, setName]         = useState('')
   const [description, setDescription] = useState('')
   const [color, setColor]       = useState(COLORS[0])
-  const [icon, setIcon]         = useState(CATEGORY_ICONS[0].value)
+  const [icon, setIcon]         = useState<string>(CATEGORY_ICONS[0].value)
   const [error, setError]       = useState<string | null>(null)
 
   useEffect(() => {
