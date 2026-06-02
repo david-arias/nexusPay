@@ -185,6 +185,20 @@ export function AddPaymentClient({ categories, spaces, usdToCOP }: AddPaymentCli
           </div>
         )}
 
+        {/* Notas */}
+        <div className="bg-white rounded-2xl border border-gray-100 p-4">
+          <label className="text-[11px] font-semibold uppercase tracking-widest text-gray-500 block mb-2">
+            Notas (opcional)
+          </label>
+          <textarea
+            name="notes"
+            rows={3}
+            placeholder="Ej. Cuenta bancaria, número de referencia, datos de pago..."
+            className="w-full text-[15px] text-gray-900 placeholder-gray-400
+                       bg-transparent border-none outline-none resize-none leading-relaxed"
+          />
+        </div>
+
         {/* Recurrente */}
         <div className="bg-white rounded-2xl border border-gray-100 p-4">
           <Toggle
