@@ -48,15 +48,20 @@ function Loader() {
     >
       {/* Logo */}
       <div className="flex flex-col items-center gap-3">
-        <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-          <span className="text-white text-3xl font-bold">N</span>
-        </div>
-        <span className="text-blue-600 font-bold text-lg">NexusPay</span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/icons/icon-192.png"
+          alt="NexusPay"
+          width={72}
+          height={72}
+          className="rounded-2xl shadow-lg"
+        />
+        <span className="font-bold text-lg" style={{ color: 'var(--primary)' }}>NexusPay</span>
       </div>
 
       {/* Spinner */}
-      <div className="w-8 h-8 border-3 border-blue-200 border-t-blue-600 rounded-full animate-spin mt-2"
-        style={{ borderWidth: 3 }} />
+      <div className="w-8 h-8 rounded-full animate-spin mt-2"
+        style={{ borderWidth: 3, borderStyle: 'solid', borderColor: 'var(--border)', borderTopColor: 'var(--primary)' }} />
     </div>
   )
 }
