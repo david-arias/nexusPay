@@ -157,7 +157,7 @@ export default function CategoriesPage() {
                         'w-11 h-11 flex items-center justify-center rounded-xl tap-none transition-all',
                         icon === value ? 'ring-2 ring-offset-1' : 'bg-gray-100 hover:bg-gray-200'
                       )}
-                      style={icon === value ? { backgroundColor: `${color}20`, ringColor: color } : {}}>
+                      style={icon === value ? { backgroundColor: `${color}20`, outline: `2px solid ${color}`, outlineOffset: '2px' } : {}}>
                       <CategoryIcon icon={value} color={icon === value ? color : '#9CA3AF'} size="sm" className="!w-full !h-full !rounded-xl" />
                     </button>
                   ))}
