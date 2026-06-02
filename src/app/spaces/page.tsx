@@ -85,8 +85,6 @@ function SpaceCard({ space }: { space: any }) {
           <h3 className="font-bold text-gray-900 text-[16px]">{space.name}</h3>
           {space.description && <p className="text-xs text-gray-400 mt-0.5">{space.description}</p>}
         </div>
-        </div>
-        {/* Member avatars */}
       </div>
 
       {/* Pending amount */}
