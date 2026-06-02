@@ -4,6 +4,7 @@ import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { ChevronLeft, Loader2, Save } from 'lucide-react'
 import { CategoryIcon } from '@/components/ui/CategoryIcon'
+import { Toggle } from '@/components/ui/Toggle'
 import { BottomNav } from '@/components/layout/BottomNav'
 import { createPayment } from './actions'
 import { cn } from '@/lib/utils'
@@ -184,27 +185,14 @@ export function AddPaymentClient({ categories, spaces, usdToCOP }: AddPaymentCli
           </div>
         )}
 
-        {/* Recurrente — fixed toggle */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-4 flex items-center justify-between gap-4">
-          <div>
-            <p className="text-[15px] font-semibold text-gray-900">Recurrente</p>
-            <p className="text-xs text-gray-500 mt-0.5">Se cobra automáticamente cada mes</p>
-          </div>
-          <button
-            type="button"
-            role="switch"
-            aria-checked={isRecurring}
-            onClick={() => setIsRecurring(v => !v)}
-            className={cn(
-              'relative flex-shrink-0 w-12 h-7 rounded-full transition-colors duration-200 tap-none',
-              isRecurring ? 'bg-blue-600' : 'bg-gray-300'
-            )}
-          >
-            <span className={cn(
-              'absolute top-1 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200',
-              isRecurring ? 'translate-x-6' : 'translate-x-1'
-            )} />
-          </button>
+        {/* Recurrente */}
+        <div className="bg-white rounded-2xl border border-gray-100 p-4">
+          <Toggle
+            checked={isRecurring}
+            onChange={setIsRecurring}
+            label="Recurrente"
+            description="Se cobra automáticamente cada mes"
+          />
         </div>
 
         {error && (

@@ -1,6 +1,6 @@
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ChevronLeft, Calendar, Tag, Repeat, CreditCard } from 'lucide-react'
+import { ChevronLeft, Calendar, Tag, Repeat, CreditCard, Pencil } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { BottomNav } from '@/components/layout/BottomNav'
 import { CategoryIcon } from '@/components/ui/CategoryIcon'
@@ -33,7 +33,11 @@ export default async function PaymentDetailPage({ params }: { params: { id: stri
           className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
           <ChevronLeft size={22} className="text-gray-700" />
         </Link>
-        <h1 className="text-lg font-bold text-gray-900">Detalle del Pago</h1>
+        <h1 className="text-lg font-bold text-gray-900 flex-1">Detalle del Pago</h1>
+        <Link href={`/payments/${params.id}/edit`}
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
+          <Pencil size={20} className="text-gray-600" />
+        </Link>
       </header>
 
       <div className="px-4 flex flex-col gap-4">

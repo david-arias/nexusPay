@@ -115,10 +115,10 @@ export default function CategoriesPage() {
         </button>
       </div>
 
-      {/* Bottom sheet form */}
+      {/* Bottom sheet form — z-[200] sits above BottomNav (z-50) */}
       {showForm && (
-        <div className="fixed inset-0 bg-black/40 z-40 flex items-end" onClick={() => setShowForm(false)}>
-          <div className="w-full max-w-md mx-auto bg-white rounded-t-3xl p-6 flex flex-col gap-4"
+        <div className="fixed inset-0 bg-black/50 z-[200] flex items-end" onClick={() => setShowForm(false)}>
+          <div className="w-full max-w-md mx-auto bg-white rounded-t-3xl p-6 pb-10 flex flex-col gap-4"
             onClick={e => e.stopPropagation()}>
             <h2 className="text-lg font-bold text-gray-900">{editId ? 'Editar' : 'Nueva'} Categoría</h2>
 

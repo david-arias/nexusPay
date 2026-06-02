@@ -1,4 +1,4 @@
-import { formatCurrency } from '@/lib/utils'
+import { formatByCurrency } from '@/lib/exchange-rate'
 import type { DashboardSummary } from '@/types'
 
 interface SummaryCardProps {
@@ -23,7 +23,7 @@ export function SummaryCard({ summary, month }: SummaryCardProps) {
 
       {/* Big amount */}
       <p className="text-[2rem] font-bold leading-none text-gray-900 mb-4">
-        {formatCurrency(total_month, currency)}
+        {formatByCurrency(total_month, currency)}
       </p>
 
       {/* Progress bar */}
@@ -46,7 +46,7 @@ export function SummaryCard({ summary, month }: SummaryCardProps) {
             Pagado
           </p>
           <p className="text-base font-bold text-green-700">
-            {formatCurrency(total_paid, currency)}
+            {formatByCurrency(total_paid, currency)}
           </p>
         </div>
         <div className="flex-1 bg-blue-50 rounded-xl p-3">
@@ -54,7 +54,7 @@ export function SummaryCard({ summary, month }: SummaryCardProps) {
             Pendiente
           </p>
           <p className="text-base font-bold text-blue-700">
-            {formatCurrency(total_pending, currency)}
+            {formatByCurrency(total_pending, currency)}
           </p>
         </div>
       </div>

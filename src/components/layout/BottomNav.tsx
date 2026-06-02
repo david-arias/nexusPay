@@ -22,7 +22,7 @@ export function BottomNav() {
   return (
     <nav
       className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md
-                 bg-white border-t border-gray-100 z-50"
+                 bg-white border-t border-gray-100 z-40"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       aria-label="Navegación principal"
     >
