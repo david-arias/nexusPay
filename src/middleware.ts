@@ -32,7 +32,14 @@ export async function middleware(request: NextRequest) {
   )
 
   // Refresh session — MUST happen before any redirect checks
-  const { data: { user } } = await supabase.auth.getUser()
+  let user = null
+  try {
+    const { data } = await supabase.auth.getUser()
+    user = data.user
+  } catch {
+    // If Supabase is unreachable, allow the request through
+    return supabaseResponse
+  }
 
   const { pathname } = request.nextUrl
   const isAuthRoute = pathname.startsWith('/auth')
