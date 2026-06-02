@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // PWA headers for installability
   async headers() {
     return [
       {
