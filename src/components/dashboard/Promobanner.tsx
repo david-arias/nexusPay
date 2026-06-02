@@ -25,7 +25,7 @@ export function PromoBanner() {
       </div>
 
       <Link
-        href="/settings/reminders"
+        href="/notifications/settings"
         className="flex-shrink-0 bg-white/20 hover:bg-white/30 text-white
                    text-xs font-semibold px-4 py-2 rounded-full
                    transition-colors duration-150 tap-none z-10 whitespace-nowrap"
