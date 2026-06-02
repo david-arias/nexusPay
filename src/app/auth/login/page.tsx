@@ -24,6 +24,9 @@ export default function LoginPage() {
       <div className="flex-1 flex flex-col justify-center px-6 py-12">
 
         <div className="text-center mb-10">
+          <div className="flex justify-center mb-4">
+            <img src="/icons/icon.svg" alt="NexusPay" className="w-20 h-20 rounded-2xl shadow-md" />
+          </div>
           <h1 className="text-3xl font-bold text-blue-600 mb-6">NexusPay</h1>
           <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-2">Bienvenido de nuevo</h2>
           <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
