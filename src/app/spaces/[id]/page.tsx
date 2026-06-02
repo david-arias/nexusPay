@@ -7,7 +7,8 @@ import { CategoryIcon } from '@/components/ui/CategoryIcon'
 import { formatByCurrency } from '@/lib/exchange-rate'
 import { cn } from '@/lib/utils'
 
-export default async function SpaceDetailPage({ params }: { params: { id: string } }) {
+export default async function SpaceDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth/login')
@@ -16,7 +17,7 @@ export default async function SpaceDetailPage({ params }: { params: { id: string
   const { data: space } = await supabase
     .from('spaces')
     .select('*, members:space_members(*, profile:profiles(id, full_name, avatar_url))')
-    .eq('id', params.id)
+    .eq('id', id)
     .single()
 
   if (!space) notFound()
@@ -32,7 +33,7 @@ export default async function SpaceDetailPage({ params }: { params: { id: string
     .eq('year', year)
     .eq('month', month)
     .in('payment_id', (
-      await supabase.from('payments').select('id').eq('space_id', params.id)
+      await supabase.from('payments').select('id').eq('space_id', id)
     ).data?.map(p => p.id) ?? [])
 
   const totalPending = (entries ?? [])
@@ -55,7 +56,7 @@ export default async function SpaceDetailPage({ params }: { params: { id: string
         </Link>
         <h1 className="text-lg font-bold text-gray-900 flex-1">Detalle del Espacio</h1>
         {isOwner && (
-          <Link href={`/spaces/${params.id}/edit`}
+          <Link href={`/spaces/${id}/edit`}
             className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
             <Pencil size={20} className="text-gray-600" />
           </Link>
@@ -73,7 +74,7 @@ export default async function SpaceDetailPage({ params }: { params: { id: string
 
         {/* Invite member button */}
         {isOwner && (
-          <Link href={`/spaces/${params.id}/invite`}
+          <Link href={`/spaces/${id}/invite`}
             className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-[15px]
                        rounded-2xl flex items-center justify-center gap-2 transition-colors tap-none">
             <UserPlus size={18} />
@@ -154,7 +155,7 @@ export default async function SpaceDetailPage({ params }: { params: { id: string
         {/* Delete space — owner only */}
         {isOwner && (
           <div className="mt-2">
-            <Link href={`/spaces/${params.id}/delete`}
+            <Link href={`/spaces/${id}/delete`}
               className="w-full h-14 border-2 border-red-300 text-red-600 font-bold text-[15px]
                          rounded-2xl flex items-center justify-center gap-2 hover:bg-red-50 transition-colors tap-none">
               <Trash2 size={18} />

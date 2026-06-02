@@ -4,7 +4,8 @@ import { getCategories } from '@/lib/supabase/queries'
 import { getUSDtoCOP } from '@/lib/exchange-rate'
 import { EditPaymentClient } from './EditPaymentClient'
 
-export default async function EditPaymentPage({ params }: { params: { id: string } }) {
+export default async function EditPaymentPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth/login')
@@ -13,7 +14,7 @@ export default async function EditPaymentPage({ params }: { params: { id: string
     supabase
       .from('payment_entries')
       .select('*, payment:payments(*, category:categories(*))')
-      .eq('id', params.id)
+      .eq('id', id)
       .single(),
     getCategories(user.id),
     getUSDtoCOP(),

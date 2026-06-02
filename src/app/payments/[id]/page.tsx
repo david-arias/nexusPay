@@ -9,7 +9,8 @@ import { format, parseISO } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { cn } from '@/lib/utils'
 
-export default async function PaymentDetailPage({ params }: { params: { id: string } }) {
+export default async function PaymentDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth/login')
@@ -17,7 +18,7 @@ export default async function PaymentDetailPage({ params }: { params: { id: stri
   const { data: entry } = await supabase
     .from('payment_entries')
     .select('*, payment:payments(*, category:categories(*), space:spaces(name))')
-    .eq('id', params.id)
+    .eq('id', id)
     .single()
 
   if (!entry) notFound()
@@ -34,7 +35,7 @@ export default async function PaymentDetailPage({ params }: { params: { id: stri
           <ChevronLeft size={22} className="text-gray-700" />
         </Link>
         <h1 className="text-lg font-bold text-gray-900 flex-1">Detalle del Pago</h1>
-        <Link href={`/payments/${params.id}/edit`}
+        <Link href={`/payments/${id}/edit`}
           className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
           <Pencil size={20} className="text-gray-600" />
         </Link>
