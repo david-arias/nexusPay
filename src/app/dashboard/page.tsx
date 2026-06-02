@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { getPaymentEntries, computeSummary } from '@/lib/supabase/queries'
+import { ensureMonthlyEntries } from '@/lib/supabase/generate-entries'
 import { DashboardClient } from './DashboardClient'
 
 /**
@@ -15,6 +16,9 @@ export default async function DashboardPage() {
   const now = new Date()
   const year = now.getFullYear()
   const month = now.getMonth() + 1 // 1-12
+
+  // Auto-generate entries for recurring payments if they don't exist yet this month
+  await ensureMonthlyEntries(user.id, year, month)
 
   const [profileResult, entries] = await Promise.all([
     supabase.from('profiles').select('full_name, currency').eq('id', user.id).single(),

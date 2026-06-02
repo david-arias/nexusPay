@@ -41,7 +41,7 @@ function Loader() {
     <div
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-4"
       style={{
-        backgroundColor: '#F9F9FF',
+        backgroundColor: 'var(--surface)',
         opacity: fading ? 0 : 1,
         transition: 'opacity 0.3s ease',
       }}

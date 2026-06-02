@@ -52,7 +52,7 @@ export function AddPaymentClient({ categories, spaces, usdToCOP }: AddPaymentCli
   const days = Array.from({ length: 31 }, (_, i) => i + 1)
 
   return (
-    <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: '#F9F9FF' }}>
+    <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
 
       {/* Header */}
       <header className="flex items-center gap-3 px-4 pt-12 pb-4">

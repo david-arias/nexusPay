@@ -4,35 +4,45 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --color-primary: #0058BE;
-    --color-success: #10B981;
-    --color-warning: #F59E0B;
-    --color-danger: #EF4444;
-  }
+/* ── Design tokens ──────────────────────────────── */
+:root {
+  --surface:        #F9F9FF;
+  --card:           #FFFFFF;
+  --border:         #E5E7EB;
+  --text-primary:   #111827;
+  --text-secondary: #6B7280;
+  --primary:        #0058BE;
+  --primary-light:  #EFF6FF;
+}
 
+.dark {
+  --surface:        #0F0F14;
+  --card:           #1A1A24;
+  --border:         #2D2D3A;
+  --text-primary:   #F1F1F5;
+  --text-secondary: #9CA3AF;
+  --primary:        #3B82F6;
+  --primary-light:  #1E3A5F;
+}
+
+@layer base {
   html {
-    /* Prevent font scaling on iOS landscape */
     -webkit-text-size-adjust: 100%;
   }
 
   body {
-    @apply font-sans text-gray-900 antialiased;
-    background-color: #F9F9FF;
+    @apply font-sans antialiased;
+    background-color: var(--surface);
+    color: var(--text-primary);
     padding-bottom: env(safe-area-inset-bottom);
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
-  * {
-    @apply box-border;
-  }
+  * { @apply box-border; }
 }
 
 @layer utilities {
-  /* Hide scrollbar but keep scroll */
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-  /* Tap highlight removal for mobile */
   .tap-none { -webkit-tap-highlight-color: transparent; }
 }

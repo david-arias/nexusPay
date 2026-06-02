@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Bell, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getSpaces } from '@/lib/supabase/queries'
 import { BottomNav } from '@/components/layout/BottomNav'
@@ -13,14 +13,11 @@ export default async function SpacesPage() {
   const spaces = await getSpaces(user.id) as any[]
 
   return (
-    <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: '#F9F9FF' }}>
+    <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
 
       {/* Header */}
-      <header className="flex items-center justify-between px-4 pt-12 pb-4">
+      <header className="px-4 pt-12 pb-4">
         <h1 className="text-lg font-bold text-gray-900">Espacios</h1>
-        <button className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">
-          <Bell size={22} className="text-gray-700" />
-        </button>
       </header>
 
       <div className="px-4">

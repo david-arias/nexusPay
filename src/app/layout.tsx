@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { NavigationProgress } from '@/components/layout/NavigationProgress'
+import { ThemeProvider } from '@/components/layout/ThemeProvider'
 
 export const metadata: Metadata = {
   title: 'NexusPay',
@@ -26,10 +27,12 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body>
-        <NavigationProgress />
-        <div className="mx-auto max-w-md min-h-screen relative">
-          {children}
-        </div>
+        <ThemeProvider>
+          <NavigationProgress />
+          <div className="mx-auto max-w-md min-h-screen relative">
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -37,7 +37,7 @@ export default async function NotificationsPage() {
   const upcoming = notifications.filter(n => n.days > 0)
 
   return (
-    <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: '#F9F9FF' }}>
+    <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
       <header className="flex items-center gap-3 px-4 pt-12 pb-4">
         <Link href="/dashboard"
           className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 tap-none">

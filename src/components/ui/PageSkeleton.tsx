@@ -4,7 +4,7 @@
  */
 export function PageSkeleton() {
   return (
-    <div className="flex flex-col min-h-screen pb-24 animate-pulse" style={{ backgroundColor: '#F9F9FF' }}>
+    <div className="flex flex-col min-h-screen pb-24 animate-pulse" style={{ backgroundColor: 'var(--surface)' }}>
       {/* Header */}
       <div className="flex items-center justify-between px-4 pt-12 pb-4">
         <div className="flex items-center gap-3">
