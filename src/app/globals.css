@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #0058BE;
+    --color-success: #10B981;
+    --color-warning: #F59E0B;
+    --color-danger: #EF4444;
+  }
+
+  html {
+    /* Prevent font scaling on iOS landscape */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply font-sans text-gray-900 antialiased;
+    background-color: #F9F9FF;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  * {
+    @apply box-border;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar but keep scroll */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Tap highlight removal for mobile */
+  .tap-none { -webkit-tap-highlight-color: transparent; }
+}
