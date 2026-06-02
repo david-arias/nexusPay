@@ -120,7 +120,10 @@ export default function CategoriesPage() {
             {/* Sheet header */}
             <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-gray-100">
               <h2 className="text-lg font-bold text-gray-900">{editId ? 'Editar' : 'Nueva'} Categoría</h2>
-              <button onClick={() => setShowForm(false)} className="text-gray-400 text-sm tap-none">Cancelar</button>
+              <button onClick={() => setShowForm(false)}
+                className="h-9 px-3 text-gray-400 text-sm tap-none rounded-lg hover:bg-gray-100 transition-colors">
+                Cancelar
+              </button>
             </div>
 
             {/* Scrollable content */}
@@ -151,7 +154,7 @@ export default function CategoriesPage() {
                     <button key={value} type="button" onClick={() => setIcon(value)}
                       title={label}
                       className={cn(
-                        'w-10 h-10 flex items-center justify-center rounded-xl tap-none transition-all',
+                        'w-11 h-11 flex items-center justify-center rounded-xl tap-none transition-all',
                         icon === value ? 'ring-2 ring-offset-1' : 'bg-gray-100 hover:bg-gray-200'
                       )}
                       style={icon === value ? { backgroundColor: `${color}20`, ringColor: color } : {}}>
@@ -173,8 +176,8 @@ export default function CategoriesPage() {
               {error && <p className="text-sm text-red-600">{error}</p>}
 
               <button onClick={handleSave} disabled={isPending}
-                className="w-full h-12 rounded-xl bg-blue-600 text-white font-bold tap-none
-                           flex items-center justify-center gap-2 disabled:opacity-60 mb-2">
+                className="w-full h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold tap-none
+                           flex items-center justify-center gap-2 disabled:opacity-60 mb-2 transition-colors">
                 {isPending && <Loader2 size={16} className="animate-spin" />}
                 Guardar Categoría
               </button>

@@ -1,11 +1,12 @@
 'use client'
 
-import { useTransition, useState } from 'react'
+import { use, useTransition, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Trash2, Loader2, ChevronLeft } from 'lucide-react'
 import { BottomNav } from '@/components/layout/BottomNav'
 
-export default function DeleteSpacePage({ params }: { params: { id: string } }) {
+export default function DeleteSpacePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
@@ -14,7 +15,7 @@ export default function DeleteSpacePage({ params }: { params: { id: string } }) 
     startTransition(async () => {
       const { createClient } = await import('@/lib/supabase/client')
       const s = createClient()
-      const { error } = await s.from('spaces').delete().eq('id', params.id)
+      const { error } = await s.from('spaces').delete().eq('id', id)
       if (error) { setError(error.message); return }
       router.push('/spaces')
       router.refresh()
@@ -35,17 +36,13 @@ export default function DeleteSpacePage({ params }: { params: { id: string } }) 
         <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center">
           <Trash2 size={36} className="text-red-600" />
         </div>
-
         <div className="text-center">
           <h2 className="text-xl font-bold text-gray-900 mb-2">¿Eliminar este espacio?</h2>
           <p className="text-sm text-gray-500 leading-relaxed">
-            Esta acción eliminará el espacio y <strong>todos los pagos asociados</strong> permanentemente.
-            No se puede deshacer.
+            Esta acción eliminará el espacio y <strong>todos los pagos asociados</strong> permanentemente. No se puede deshacer.
           </p>
         </div>
-
-        {error && <p className="text-sm text-red-600 bg-red-50 px-4 py-3 rounded-xl">{error}</p>}
-
+        {error && <p className="text-sm text-red-600 bg-red-50 px-4 py-3 rounded-xl w-full text-center">{error}</p>}
         <div className="flex flex-col gap-3 w-full">
           <button onClick={handleDelete} disabled={isPending}
             className="w-full h-14 bg-red-600 hover:bg-red-700 text-white font-bold text-[15px]
@@ -60,7 +57,6 @@ export default function DeleteSpacePage({ params }: { params: { id: string } }) 
           </button>
         </div>
       </div>
-
       <BottomNav />
     </div>
   )

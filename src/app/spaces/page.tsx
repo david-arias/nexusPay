@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { Bell, Plus, UserPlus } from 'lucide-react'
+import { Bell, Plus } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { getSpaces } from '@/lib/supabase/queries'
 import { BottomNav } from '@/components/layout/BottomNav'
@@ -74,7 +74,6 @@ export default async function SpacesPage() {
 }
 
 function SpaceCard({ space }: { space: any }) {
-  const members = space.members ?? []
   const totalPending = space.pending_amount ?? 0
   const paidPct = 60 // TODO: compute from real entries
 
@@ -84,28 +83,10 @@ function SpaceCard({ space }: { space: any }) {
       <div className="flex items-start justify-between mb-4">
         <div>
           <h3 className="font-bold text-gray-900 text-[16px]">{space.name}</h3>
-          <p className="text-xs text-gray-500 mt-0.5">
-            {members.length} MIEMBRO{members.length !== 1 ? 'S' : ''}
-          </p>
+          {space.description && <p className="text-xs text-gray-400 mt-0.5">{space.description}</p>}
+        </div>
         </div>
         {/* Member avatars */}
-        <div className="flex -space-x-2">
-          {members.slice(0, 3).map((m: any) => (
-            <div
-              key={m.user_id}
-              className="w-8 h-8 rounded-full bg-blue-600 border-2 border-white
-                         flex items-center justify-center text-white text-xs font-bold"
-            >
-              {m.profile?.full_name?.[0] ?? '?'}
-            </div>
-          ))}
-          {members.length > 3 && (
-            <div className="w-8 h-8 rounded-full bg-gray-200 border-2 border-white
-                            flex items-center justify-center text-gray-600 text-xs font-bold">
-              +{members.length - 3}
-            </div>
-          )}
-        </div>
       </div>
 
       {/* Pending amount */}
@@ -123,24 +104,12 @@ function SpaceCard({ space }: { space: any }) {
       </div>
 
       {/* Actions */}
-      <div className="flex gap-2">
-        <Link
-          href={`/spaces/${space.id}`}
-          className="flex-1 h-10 bg-gray-100 hover:bg-gray-200 rounded-xl
-                     text-sm font-semibold text-gray-700
-                     flex items-center justify-center transition-colors tap-none"
-        >
-          Ver Detalles
-        </Link>
-        <Link
-          href={`/spaces/${space.id}/invite`}
-          className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-xl
-                     flex items-center justify-center transition-colors tap-none"
-          aria-label="Invitar miembro"
-        >
-          <UserPlus size={18} className="text-gray-700" />
-        </Link>
-      </div>
+      <Link href={`/spaces/${space.id}`}
+        className="w-full h-11 bg-gray-100 hover:bg-gray-200 rounded-xl
+                   text-sm font-semibold text-gray-700
+                   flex items-center justify-center transition-colors tap-none">
+        Ver Detalles
+      </Link>
     </div>
   )
 }
