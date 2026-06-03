@@ -3,21 +3,29 @@
 import Link from 'next/link'
 import { Check, Pencil } from 'lucide-react'
 import { CategoryIcon } from '@/components/ui/CategoryIcon'
-import { formatByCurrency } from '@/lib/exchange-rate'
-import { getStatusConfig } from '@/lib/utils'
-import { cn } from '@/lib/utils'
+import { formatCOP, formatUSD, toCOP } from '@/lib/exchange-rate'
+import { getStatusConfig, cn } from '@/lib/utils'
 import type { UpcomingPayment } from '@/types'
 
 interface PaymentItemProps {
   entry: UpcomingPayment
   onTogglePaid?: (id: string) => void
+  usdToCOP?: number
 }
 
-export function PaymentItem({ entry, onTogglePaid }: PaymentItemProps) {
+export function PaymentItem({ entry, onTogglePaid, usdToCOP = 4100 }: PaymentItemProps) {
   const { payment, status, days_until_due } = entry
   const category = payment.category
-  const isPaid   = status === 'paid'
+  const isPaid    = status === 'paid'
   const statusCfg = getStatusConfig(status, days_until_due)
+  const currency  = payment.currency ?? 'COP'
+  const isUSD     = currency === 'USD'
+
+  const formattedAmount = isUSD
+    ? `USD ${formatUSD(payment.amount)}`
+    : `COP ${formatCOP(payment.amount)}`
+
+  const copEquivalent = isUSD ? formatCOP(toCOP(payment.amount, 'USD', usdToCOP)) : null
 
   return (
     <div className={cn(
@@ -27,10 +35,8 @@ export function PaymentItem({ entry, onTogglePaid }: PaymentItemProps) {
       days_until_due === 0 && !isPaid ? 'border-l-4 border-l-amber-400' : ''
     )}>
 
-      {/* Category icon */}
       <CategoryIcon icon={category?.icon ?? 'circle'} color={category?.color ?? '#3B82F6'} size="md" />
 
-      {/* Name + status — tapping goes to detail/edit */}
       <Link href={`/payments/${entry.id}`} className="flex-1 min-w-0 tap-none">
         <p className={cn(
           'text-[15px] font-semibold leading-tight truncate',
@@ -46,12 +52,16 @@ export function PaymentItem({ entry, onTogglePaid }: PaymentItemProps) {
         </p>
       </Link>
 
-      {/* Amount */}
-      <span className={cn('text-base font-bold tabular-nums', isPaid ? 'text-[var(--text-secondary)]' : 'text-[var(--text-primary)]')}>
-        {formatByCurrency(payment.amount, payment.currency ?? 'COP')}
-      </span>
+      {/* Amount + USD→COP hint */}
+      <div className="text-right flex-shrink-0">
+        <span className={cn('text-base font-bold tabular-nums block', isPaid ? 'text-[var(--text-secondary)]' : 'text-[var(--text-primary)]')}>
+          {formattedAmount}
+        </span>
+        {copEquivalent && (
+          <span className="text-[10px] text-[var(--text-secondary)] tabular-nums">≈ {copEquivalent}</span>
+        )}
+      </div>
 
-      {/* Edit icon */}
       <Link
         href={`/payments/${entry.id}/edit`}
         className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[var(--card-hover)] tap-none flex-shrink-0"
@@ -60,7 +70,6 @@ export function PaymentItem({ entry, onTogglePaid }: PaymentItemProps) {
         <Pencil size={15} className="text-[var(--text-secondary)]" />
       </Link>
 
-      {/* Toggle paid */}
       <button
         onClick={() => onTogglePaid?.(entry.id)}
         className={cn(

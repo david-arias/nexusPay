@@ -22,10 +22,35 @@ export function AddPaymentClient({ categories, spaces, usdToCOP }: AddPaymentCli
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
 
+  // Month options: current month + next 4
+  const now = new Date()
+  const monthOptions = Array.from({ length: 5 }, (_, i) => {
+    const d = new Date(now.getFullYear(), now.getMonth() + i, 1)
+    return {
+      value: `${d.getFullYear()}-${d.getMonth() + 1}`,
+      label: d.toLocaleString('es-CO', { month: 'long', year: 'numeric' })
+        .replace(/^\w/, c => c.toUpperCase()),
+      month: d.getMonth() + 1,
+      year: d.getFullYear(),
+    }
+  })
   const [selectedDay, setSelectedDay] = useState(1)
+  const [selectedMonth, setSelectedMonth] = useState(monthOptions[0].value)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(categories[0]?.id ?? null)
   const [selectedSpace, setSelectedSpace] = useState<string>('personal')
   const [isRecurring, setIsRecurring] = useState(true)
+
+  const isCurrentMonth = selectedMonth === monthOptions[0].value
+
+  function handleMonthChange(value: string) {
+    setSelectedMonth(value)
+    // If switching to a future month, recurring makes no sense — disable it
+    if (value !== monthOptions[0].value) {
+      setIsRecurring(false)
+    } else {
+      setIsRecurring(true)
+    }
+  }
   const [amount, setAmount] = useState('')
   const [currency, setCurrency] = useState<'COP' | 'USD'>('COP')
 
@@ -38,6 +63,11 @@ export function AddPaymentClient({ categories, spaces, usdToCOP }: AddPaymentCli
     setError(null)
     const formData = new FormData(e.currentTarget)
     formData.set('due_day', String(selectedDay))
+    const chosenMonth = monthOptions.find(m => m.value === selectedMonth)
+    if (chosenMonth) {
+      formData.set('month', String(chosenMonth.month))
+      formData.set('year',  String(chosenMonth.year))
+    }
     formData.set('category_id', selectedCategory ?? '')
     formData.set('space_id', selectedSpace === 'personal' ? '' : selectedSpace)
     formData.set('is_recurring', String(isRecurring))
@@ -121,11 +151,30 @@ export function AddPaymentClient({ categories, spaces, usdToCOP }: AddPaymentCli
           )}
         </div>
 
-        {/* Día de vencimiento */}
+        {/* Día + Mes de vencimiento */}
         <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
           <label className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)] block mb-3">
-            Día de Vencimiento
+            Vencimiento
           </label>
+
+          {/* Month dropdown */}
+          <div className="mb-3">
+            <p className="text-xs text-[var(--text-secondary)] mb-1.5">Mes</p>
+            <select
+              value={selectedMonth}
+              onChange={e => handleMonthChange(e.target.value)}
+              className="w-full h-11 px-3 rounded-xl bg-[var(--input-bg)] text-[var(--text-primary)]
+                         text-sm font-medium border border-[var(--border)] outline-none
+                         focus:border-blue-500 transition-colors"
+            >
+              {monthOptions.map(m => (
+                <option key={m.value} value={m.value}>{m.label}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Day picker */}
+          <p className="text-xs text-[var(--text-secondary)] mb-1.5">Día</p>
           <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
             {days.map(day => (
               <button key={day} type="button" onClick={() => setSelectedDay(day)}
@@ -200,12 +249,19 @@ export function AddPaymentClient({ categories, spaces, usdToCOP }: AddPaymentCli
         </div>
 
         {/* Recurrente */}
-        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
+        <div className={cn(
+          'bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4',
+          !isCurrentMonth && 'opacity-50'
+        )}>
           <Toggle
             checked={isRecurring}
-            onChange={setIsRecurring}
+            onChange={isCurrentMonth ? setIsRecurring : () => {}}
             label="Recurrente"
-            description="Se cobra automáticamente cada mes"
+            description={
+              isCurrentMonth
+                ? 'Se cobra automáticamente cada mes'
+                : 'Solo disponible para el mes actual'
+            }
           />
         </div>
 

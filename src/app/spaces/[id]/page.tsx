@@ -4,8 +4,33 @@ import { ChevronLeft, Pencil, Trash2 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { BottomNav } from '@/components/layout/BottomNav'
 import { CategoryIcon } from '@/components/ui/CategoryIcon'
-import { formatByCurrency } from '@/lib/exchange-rate'
+import { formatCOP, formatUSD, getUSDtoCOP, toCOP } from '@/lib/exchange-rate'
 import { cn } from '@/lib/utils'
+
+// ── Inline pie chart (server-renderable SVG) ──────────────────────────────
+interface PieSlice { label: string; color: string; pct: number; value: number }
+
+function SpacePieChart({ slices }: { slices: PieSlice[] }) {
+  const cx = 70, cy = 70, r = 58
+  let cumAngle = -Math.PI / 2
+  const paths = slices.map(s => {
+    const angle = s.pct * 2 * Math.PI
+    const x1 = cx + r * Math.cos(cumAngle)
+    const y1 = cy + r * Math.sin(cumAngle)
+    cumAngle += angle
+    const x2 = cx + r * Math.cos(cumAngle)
+    const y2 = cy + r * Math.sin(cumAngle)
+    return { d: `M${cx} ${cy} L${x1} ${y1} A${r} ${r} 0 ${angle > Math.PI ? 1 : 0} 1 ${x2} ${y2}Z`, color: s.color }
+  })
+  return (
+    <svg viewBox="0 0 140 140" className="w-28 h-28 flex-shrink-0">
+      {paths.map((p, i) => (
+        <path key={i} d={p.d} fill={p.color} stroke="var(--card)" strokeWidth="2" />
+      ))}
+      <circle cx={cx} cy={cy} r={28} fill="var(--card)" />
+    </svg>
+  )
+}
 
 export default async function SpaceDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -26,12 +51,12 @@ export default async function SpaceDetailPage({ params }: { params: Promise<{ id
   const month = now.getMonth() + 1
 
   // Get payment ids for this space
-  const { data: spacePayments } = await supabase
-    .from('payments')
-    .select('id')
-    .eq('space_id', id)
+  const [spacePaymentsResult, usdToCOP] = await Promise.all([
+    supabase.from('payments').select('id').eq('space_id', id),
+    getUSDtoCOP(),
+  ])
 
-  const paymentIds = (spacePayments ?? []).map(p => p.id)
+  const paymentIds = (spacePaymentsResult.data ?? []).map((p: any) => p.id)
 
   const { data: entries } = paymentIds.length > 0
     ? await supabase
@@ -43,9 +68,25 @@ export default async function SpaceDetailPage({ params }: { params: Promise<{ id
         .order('due_date')
     : { data: [] }
 
-  const totalPending = (entries ?? []).filter(e => e.status !== 'paid').reduce((s, e) => s + (e.payment?.amount ?? 0), 0)
-  const totalPaid    = (entries ?? []).filter(e => e.status === 'paid').reduce((s, e) => s + (e.payment?.amount ?? 0), 0)
+  const totalPending = (entries ?? []).filter(e => e.status !== 'paid')
+    .reduce((s, e) => s + toCOP(e.payment?.amount ?? 0, e.payment?.currency ?? 'COP', usdToCOP), 0)
+  const totalPaid    = (entries ?? []).filter(e => e.status === 'paid')
+    .reduce((s, e) => s + toCOP(e.payment?.amount ?? 0, e.payment?.currency ?? 'COP', usdToCOP), 0)
   const total        = totalPending + totalPaid
+
+  // Pie chart: group by category
+  const byCat: Record<string, { label: string; color: string; value: number }> = {}
+  for (const e of entries ?? []) {
+    const cat = e.payment?.category
+    const key = cat?.id ?? 'other'
+    const val = toCOP(e.payment?.amount ?? 0, e.payment?.currency ?? 'COP', usdToCOP)
+    if (!byCat[key]) byCat[key] = { label: cat?.name ?? 'Otro', color: cat?.color ?? '#94A3B8', value: 0 }
+    byCat[key].value += val
+  }
+  const pieTotal = Object.values(byCat).reduce((s, c) => s + c.value, 0)
+  const pieSlices: PieSlice[] = pieTotal > 0
+    ? Object.values(byCat).sort((a, b) => b.value - a.value).map(c => ({ ...c, pct: c.value / pieTotal }))
+    : []
 
   return (
     <div className="flex flex-col min-h-screen pb-24" style={{ backgroundColor: 'var(--surface)' }}>
@@ -72,13 +113,13 @@ export default async function SpaceDetailPage({ params }: { params: Promise<{ id
         <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-5">
           <p className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)] mb-1">Total Pendiente</p>
           <p className="text-3xl font-bold text-blue-600 tabular-nums">
-            {formatByCurrency(totalPending, 'COP')}
+            {formatCOP(totalPending)}
           </p>
           {total > 0 && (
             <div className="mt-3">
               <div className="flex justify-between text-xs text-[var(--text-secondary)] mb-1">
                 <span>{Math.round((totalPaid / total) * 100)}% pagado</span>
-                <span>{formatByCurrency(totalPaid, 'COP')} pagado</span>
+                <span>{formatCOP(totalPaid)} pagado</span>
               </div>
               <div className="h-1.5 bg-[var(--input-bg)] rounded-full overflow-hidden">
                 <div className="h-full bg-green-500 rounded-full" style={{ width: `${(totalPaid / total) * 100}%` }} />
@@ -86,6 +127,32 @@ export default async function SpaceDetailPage({ params }: { params: Promise<{ id
             </div>
           )}
         </div>
+
+        {/* Pie chart por categoría */}
+        {pieSlices.length > 0 && (
+          <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4">
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-[var(--text-secondary)] mb-4">
+              Gastos por Categoría
+            </p>
+            <div className="flex items-center gap-4">
+              <SpacePieChart slices={pieSlices} />
+              <div className="flex flex-col gap-2 flex-1 min-w-0">
+                {pieSlices.map(s => (
+                  <div key={s.label} className="flex items-center gap-2 min-w-0">
+                    <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: s.color }} />
+                    <span className="text-xs text-[var(--text-secondary)] flex-1 truncate">{s.label}</span>
+                    <div className="text-right flex-shrink-0">
+                      <span className="text-xs font-bold text-[var(--text-primary)] tabular-nums">
+                        {Math.round(s.pct * 100)}%
+                      </span>
+                      <p className="text-[10px] text-[var(--text-secondary)] tabular-nums">{formatCOP(s.value)}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Pagos asignados */}
         <div>
@@ -116,8 +183,15 @@ export default async function SpaceDetailPage({ params }: { params: Promise<{ id
                     </div>
                     <div className="text-right">
                       <p className="font-bold tabular-nums text-[var(--text-primary)]">
-                        {formatByCurrency(entry.payment?.amount ?? 0, entry.payment?.currency ?? 'COP')}
+                        {entry.payment?.currency === 'USD'
+                          ? `USD ${formatUSD(entry.payment?.amount ?? 0)}`
+                          : `COP ${formatCOP(entry.payment?.amount ?? 0)}`}
                       </p>
+                      {entry.payment?.currency === 'USD' && (
+                        <p className="text-[10px] text-[var(--text-secondary)] tabular-nums">
+                          ≈ {formatCOP(toCOP(entry.payment?.amount ?? 0, 'USD', usdToCOP))}
+                        </p>
+                      )}
                       <p className={cn('text-[10px] font-bold uppercase',
                         isPaid ? 'text-green-600' : entry.status === 'overdue' ? 'text-red-500' : 'text-blue-600')}>
                         {isPaid ? 'Completado' : entry.status === 'overdue' ? 'Vencido' : 'Pendiente'}

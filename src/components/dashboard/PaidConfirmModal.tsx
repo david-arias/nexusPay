@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Check, Loader2, X } from 'lucide-react'
 import { format } from 'date-fns'
 import { cn } from '@/lib/utils'
-import { formatByCurrency } from '@/lib/exchange-rate'
+import { formatCOP, formatUSD } from '@/lib/exchange-rate'
 import type { UpcomingPayment } from '@/types'
 
 const METHODS = ['Débito', 'Transferencia', 'Efectivo', 'Crédito', 'Automático', 'Nequi', 'Daviplata']
@@ -52,7 +52,9 @@ export function PaidConfirmModal({ entry, onConfirm, onCancel, isPending }: Paid
               <p className="text-xs text-[var(--text-secondary)]">Monto presupuestado</p>
             </div>
             <p className="font-bold text-blue-600 tabular-nums">
-              {formatByCurrency(entry.payment.amount, entry.payment.currency ?? 'COP')}
+              {entry.payment.currency === 'USD'
+                ? `USD ${formatUSD(entry.payment.amount)}`
+                : `COP ${formatCOP(entry.payment.amount)}`}
             </p>
           </div>
 

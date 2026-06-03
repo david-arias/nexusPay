@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 import { BottomNav } from '@/components/layout/BottomNav'
 import { LogoutButton } from './LogoutButton'
 import { ThemeToggleRow } from './ThemeToggleRow'
+import { AvatarUpload } from './AvatarUpload'
 
 export default async function ProfilePage() {
   const supabase = await createClient()
@@ -26,12 +27,9 @@ export default async function ProfilePage() {
       </header>
 
       {/* Avatar + name */}
-      <div className="flex flex-col items-center py-6 gap-1">
-        <div className="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center
-                        text-white text-2xl font-bold border-4 border-blue-100">
-          {initials}
-        </div>
-        <p className="text-lg font-bold text-[var(--text-primary)] mt-2">
+      <AvatarUpload initials={initials} avatarUrl={profile?.avatar_url ?? null} />
+      <div className="flex flex-col items-center pb-2 gap-0.5 -mt-3">
+        <p className="text-lg font-bold text-[var(--text-primary)]">
           {profile?.full_name ?? 'Usuario'}
         </p>
         <p className="text-sm text-[var(--text-secondary)]">{user.email}</p>

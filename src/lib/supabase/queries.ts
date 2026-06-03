@@ -51,17 +51,19 @@ export async function getPaymentEntries(userId: string, year: number, month: num
   })) as UpcomingPayment[]
 }
 
-/** Compute dashboard summary from payment entries */
-export function computeSummary(entries: UpcomingPayment[], currency = 'USD'): DashboardSummary {
+/** Compute dashboard summary from payment entries, converting everything to COP */
+export function computeSummary(entries: UpcomingPayment[], _currency = 'COP', usdToCOP = 4100): DashboardSummary {
   let total_paid = 0
   let total_pending = 0
 
   for (const e of entries) {
     const amount = e.payment?.amount ?? 0
+    const curr   = e.payment?.currency ?? 'COP'
+    const inCOP  = curr === 'USD' ? amount * usdToCOP : amount
     if (e.status === 'paid') {
-      total_paid += amount
+      total_paid += inCOP
     } else {
-      total_pending += amount
+      total_pending += inCOP
     }
   }
 
@@ -69,7 +71,7 @@ export function computeSummary(entries: UpcomingPayment[], currency = 'USD'): Da
     total_month: total_paid + total_pending,
     total_paid,
     total_pending,
-    currency,
+    currency: 'COP',
   }
 }
 

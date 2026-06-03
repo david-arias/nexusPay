@@ -2,7 +2,7 @@
  * Fetches the current USD → COP exchange rate from a free public API.
  * Falls back to a hardcoded rate if the fetch fails.
  */
-const FALLBACK_RATE = 4100 // approx COP per 1 USD
+export const FALLBACK_RATE = 4100 // approx COP per 1 USD
 
 export async function getUSDtoCOP(): Promise<number> {
   try {
@@ -35,6 +35,25 @@ export function formatUSD(amount: number): string {
   }).format(amount)
 }
 
+/** Show amount with currency prefix: "COP $xxx" or "USD $xxx" */
+export function formatWithPrefix(amount: number, currency: string): string {
+  if (currency === 'USD') return `USD ${formatUSD(amount)}`
+  return `COP ${formatCOP(amount)}`
+}
+
 export function formatByCurrency(amount: number, currency: string): string {
   return currency === 'USD' ? formatUSD(amount) : formatCOP(amount)
+}
+
+/** Convert any amount to COP using the given rate */
+export function toCOP(amount: number, currency: string, usdToCOP: number): number {
+  return currency === 'USD' ? amount * usdToCOP : amount
+}
+
+/** Sum a list of entries converting everything to COP */
+export function sumAsCOP(
+  entries: Array<{ amount: number; currency: string }>,
+  usdToCOP: number,
+): number {
+  return entries.reduce((acc, e) => acc + toCOP(e.amount, e.currency, usdToCOP), 0)
 }

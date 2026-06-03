@@ -4,7 +4,7 @@ import { ChevronLeft, Calendar, Tag, Repeat, CreditCard, Pencil, FileText } from
 import { createClient } from '@/lib/supabase/server'
 import { BottomNav } from '@/components/layout/BottomNav'
 import { CategoryIcon } from '@/components/ui/CategoryIcon'
-import { formatByCurrency } from '@/lib/exchange-rate'
+import { formatCOP, formatUSD, getUSDtoCOP, toCOP } from '@/lib/exchange-rate'
 import { format, parseISO } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { cn } from '@/lib/utils'
@@ -16,12 +16,16 @@ export default async function PaymentDetailPage({ params }: { params: Promise<{ 
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/auth/login')
 
-  const { data: entry } = await supabase
-    .from('payment_entries')
-    .select('*, payment:payments(*, category:categories(*), space:spaces(name))')
-    .eq('id', id)
-    .single()
+  const [entryResult, usdToCOP] = await Promise.all([
+    supabase
+      .from('payment_entries')
+      .select('*, payment:payments(*, category:categories(*), space:spaces(name))')
+      .eq('id', id)
+      .single(),
+    getUSDtoCOP(),
+  ])
 
+  const entry = entryResult.data
   if (!entry) notFound()
 
   const payment = entry.payment
@@ -49,8 +53,15 @@ export default async function PaymentDetailPage({ params }: { params: Promise<{ 
           <CategoryIcon icon={cat?.icon ?? 'circle'} color={cat?.color ?? '#3B82F6'} size="lg" />
           <h2 className="text-xl font-bold text-[var(--text-primary)] mt-3">{payment?.name}</h2>
           <p className="text-3xl font-bold mt-2 tabular-nums" style={{ color: cat?.color ?? '#3B82F6' }}>
-            {formatByCurrency(payment?.amount ?? 0, payment?.currency ?? 'COP')}
+            {payment?.currency === 'USD'
+              ? `USD ${formatUSD(payment?.amount ?? 0)}`
+              : `COP ${formatCOP(payment?.amount ?? 0)}`}
           </p>
+          {payment?.currency === 'USD' && (
+            <p className="text-sm text-[var(--text-secondary)] mt-0.5 tabular-nums">
+              ≈ {formatCOP(toCOP(payment?.amount ?? 0, 'USD', usdToCOP))}
+            </p>
+          )}
           <span className={cn(
             'mt-3 px-4 py-1 rounded-full text-xs font-bold uppercase',
             isPaid ? 'bg-green-100 text-green-700' :
@@ -77,7 +88,9 @@ export default async function PaymentDetailPage({ params }: { params: Promise<{ 
           )}
           {entry.amount_paid != null && entry.amount_paid !== payment?.amount && (
             <DetailRow icon={<CreditCard size={18} />} label="Monto real pagado"
-              value={formatByCurrency(entry.amount_paid, payment?.currency ?? 'COP')} />
+              value={payment?.currency === 'USD'
+                ? `USD ${formatUSD(entry.amount_paid)}`
+                : `COP ${formatCOP(entry.amount_paid)}`} />
           )}
           {entry.payment_method && (
             <DetailRow icon={<CreditCard size={18} />} label="Método" value={entry.payment_method} />
